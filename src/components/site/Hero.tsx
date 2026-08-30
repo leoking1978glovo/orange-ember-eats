@@ -81,8 +81,8 @@ export function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, y: [0, 8, 0] }}
               transition={{
-                opacity: { delay: 1.6, duration: 0.5 },
-                y: { delay: 1.6, duration: 1.6, repeat: Infinity, ease: "easeInOut" },
+                opacity: { delay: 1.1, duration: 0.5 },
+                y: { delay: 1.1, duration: 1.6, repeat: Infinity, ease: "easeInOut" },
               }}
               className="text-cream/60 transition-colors hover:text-secondary"
             >
