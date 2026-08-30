@@ -1,17 +1,20 @@
 import { motion } from "motion/react";
+import kitchenVideo from "@/assets/kitchen.mp4.asset.json";
+import kitchenPoster from "@/assets/story-kitchen.jpg";
 
 export function VideoSection() {
   return (
     <section className="relative h-[70vh] w-full overflow-hidden bg-ink md:h-[85vh]">
       <video
-        className="absolute inset-0 h-full w-full object-cover opacity-55"
+        className="absolute inset-0 h-full w-full object-cover opacity-60"
         autoPlay
         muted
         loop
         playsInline
-        poster="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1600&q=60"
-        src="https://cdn.coverr.co/videos/coverr-cooking-in-a-restaurant-kitchen-4029/1080p.mp4"
+        poster={kitchenPoster}
+        src={kitchenVideo.url}
       />
+
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-ink/60" />
 
       <div className="relative flex h-full items-center justify-center px-6 text-center">
