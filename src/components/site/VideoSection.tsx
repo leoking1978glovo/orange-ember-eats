@@ -27,7 +27,7 @@ export function VideoSection() {
           <p className="mb-6 text-xs font-semibold tracking-[0.4em] text-secondary uppercase">
             Entre bambalinas
           </p>
-          <h2 className="mx-auto max-w-[14ch] text-[clamp(2.5rem,9vw,6rem)] text-cream">
+          <h2 className="mx-auto max-w-[14ch] text-[clamp(2.75rem,10vw,7rem)] text-cream">
             El ruido de la <span className="text-fire">cocina</span>
           </h2>
           <p className="mx-auto mt-6 max-w-lg text-cream/70">

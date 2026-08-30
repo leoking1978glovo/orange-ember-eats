@@ -9,7 +9,7 @@ const stats = [
 
 export function Story() {
   return (
-    <section id="nosotros" className="bg-ink py-24 md:py-32">
+    <section id="nosotros" className="bg-ink py-24 md:py-40">
       <div className="mx-auto grid max-w-[1600px] items-center gap-14 px-6 md:grid-cols-12 md:px-12">
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -38,7 +38,7 @@ export function Story() {
           <p className="mb-6 text-xs font-semibold tracking-[0.4em] text-secondary uppercase">
             Nuestra historia
           </p>
-          <h2 className="text-[clamp(2.25rem,6vw,4rem)] text-cream">
+          <h2 className="text-[clamp(2.5rem,7vw,5.5rem)] text-cream">
             Empezamos con una <span className="text-fire">parrilla</span> y mucho ruido
           </h2>
           <p className="mt-6 leading-relaxed text-cream/70">
