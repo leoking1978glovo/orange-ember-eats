@@ -1,4 +1,4 @@
-# Orange Ember Eats
+# Punto Verde
 
 Build a bold, maximalist restaurant landing page with an energetic, confident vibe. Think of a modern urban eatery with strong personality — like a trendy burger joint, taco spot, or fusion bistro.
 
@@ -38,7 +38,7 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
 - **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+- **Full ownership**: This code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -49,4 +49,3 @@ git clone <this-repository-url>
 cd <repository-name>
 npm i
 npm run dev
-```

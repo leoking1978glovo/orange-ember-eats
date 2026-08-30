@@ -27,7 +27,7 @@ export function Hero() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="mb-6 text-xs font-semibold tracking-[0.4em] text-secondary uppercase"
         >
-          Cocina urbana · Madrid · Desde 2016
+          Cocina con alma · Madrid · Desde 2024
         </motion.p>
 
         <h1 className="max-w-[15ch] text-[clamp(3.5rem,13vw,9.5rem)] text-cream">
@@ -51,8 +51,8 @@ export function Hero() {
             transition={{ delay: 0.7, duration: 0.8 }}
             className="max-w-md text-base leading-relaxed text-cream/70"
           >
-            Fuego vivo, ingredientes de mercado y recetas sin miedo. Un sitio ruidoso, honesto y
-            adictivo en pleno centro.
+            Ingredientes frescos, recetas sin miedo y un espacio donde cada plato cuenta una historia.
+            Un sitio honesto y adictivo en pleno centro.
           </motion.p>
 
           <div className="flex flex-col items-center gap-4">

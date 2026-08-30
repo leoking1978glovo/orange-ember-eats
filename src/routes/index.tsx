@@ -9,9 +9,9 @@ import { VideoSection } from "@/components/site/VideoSection";
 import { Reservation } from "@/components/site/Reservation";
 import { Footer } from "@/components/site/Footer";
 
-const title = "Brasa · Cocina urbana a fuego vivo en Madrid";
+const title = "Punto Verde";
 const description =
-  "Brasa es cocina urbana de fuego vivo en Madrid: platos con carácter, producto de mercado y reservas online. Saborea la revolución.";
+  "Punto Verde — Cocina con alma y sabor natural. Un espacio donde cada plato cuenta una historia.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

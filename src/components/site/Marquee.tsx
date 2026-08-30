@@ -1,4 +1,4 @@
-const items = ["Fuego vivo", "Producto de mercado", "Cocina abierta", "Sin postureo", "Brasa 24/7"];
+const items = ["Producto fresco", "Cocina con alma", "Sabor natural", "Sin postureo", "Punto Verde"];
 
 export function Marquee() {
   return (
