@@ -19,7 +19,6 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/50" />
       <div className="absolute -top-40 left-1/2 h-[60vh] w-[60vw] -translate-x-1/2 rounded-full bg-primary/25 blur-[140px]" />
 
-
       <div className="relative mx-auto w-full max-w-[1600px] px-6 pb-20 md:px-12 md:pb-28">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
