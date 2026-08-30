@@ -27,7 +27,7 @@ export function Hero() {
           Cocina urbana · Madrid · Desde 2016
         </motion.p>
 
-        <h1 className="max-w-[15ch] text-[clamp(3rem,11vw,7.5rem)] text-cream">
+        <h1 className="max-w-[15ch] text-[clamp(3.5rem,13vw,9.5rem)] text-cream">
           {words.map((w, i) => (
             <motion.span
               key={w}

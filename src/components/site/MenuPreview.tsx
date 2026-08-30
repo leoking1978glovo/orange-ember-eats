@@ -3,7 +3,7 @@ import { menu } from "@/data/restaurant";
 
 export function MenuPreview() {
   return (
-    <section id="menu" className="bg-cream py-24 md:py-32">
+    <section id="menu" className="bg-cream py-24 md:py-40">
       <div className="mx-auto max-w-[1600px] px-6 md:px-12">
         <div className="grid gap-6 md:grid-cols-12 md:items-end">
           <motion.h2
@@ -11,7 +11,7 @@ export function MenuPreview() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-[clamp(2.5rem,8vw,5rem)] text-ink md:col-span-7"
+            className="text-[clamp(2.75rem,9vw,6.5rem)] text-ink md:col-span-7"
           >
             La carta
           </motion.h2>

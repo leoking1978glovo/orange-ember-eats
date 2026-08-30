@@ -21,7 +21,7 @@ export function Reservation() {
   };
 
   return (
-    <section id="reservas" className="bg-fire py-24 md:py-32">
+    <section id="reservas" className="bg-fire py-24 md:py-40">
       <div className="mx-auto grid max-w-[1600px] gap-14 px-6 md:grid-cols-12 md:px-12">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -30,7 +30,7 @@ export function Reservation() {
           transition={{ duration: 0.7 }}
           className="md:col-span-5"
         >
-          <h2 className="text-[clamp(2.5rem,8vw,5rem)] text-ink">Reserva tu mesa</h2>
+          <h2 className="text-[clamp(2.75rem,9vw,6.5rem)] text-ink">Reserva tu mesa</h2>
           <p className="mt-6 max-w-sm leading-relaxed text-ink/70">
             Abrimos reservas con 30 días de antelación. Para grupos de más de 8 personas,
             llámanos directamente.

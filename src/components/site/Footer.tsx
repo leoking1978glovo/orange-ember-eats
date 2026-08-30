@@ -18,7 +18,7 @@ export function Footer() {
   return (
     <footer id="contacto" className="bg-ink pt-24 pb-10">
       <div className="mx-auto max-w-[1600px] px-6 md:px-12">
-        <h2 className="text-[clamp(3rem,14vw,11rem)] text-cream/10">BRASA</h2>
+        <h2 className="text-[clamp(2.5rem,10vw,8rem)] text-cream/10">BRASA</h2>
 
         <div className="mt-12 grid gap-12 border-t border-cream/15 pt-12 md:grid-cols-4">
           <div>

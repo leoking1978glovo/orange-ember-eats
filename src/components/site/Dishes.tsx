@@ -3,7 +3,7 @@ import { dishes } from "@/data/restaurant";
 
 export function Dishes() {
   return (
-    <section className="bg-ink py-24 md:py-32">
+    <section className="bg-ink py-24 md:py-40">
       <div className="mx-auto max-w-[1600px] px-6 md:px-12">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <motion.h2
@@ -11,7 +11,7 @@ export function Dishes() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7 }}
-            className="text-[clamp(2.5rem,7vw,4.5rem)] text-cream"
+            className="text-[clamp(2.75rem,8vw,6rem)] text-cream"
           >
             Platos <span className="text-fire">estrella</span>
           </motion.h2>
