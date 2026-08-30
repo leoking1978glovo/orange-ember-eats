@@ -9,6 +9,7 @@ export type Dish = {
   description: string;
   price: string;
   image: string;
+  tag?: string;
 };
 
 export const dishes: Dish[] = [
