@@ -18,6 +18,7 @@ export const dishes: Dish[] = [
     description: "Doble carne madurada, queso fundido y salsa secreta de la casa.",
     price: "14,50 €",
     image: burger,
+    tag: "Favorito del Chef",
   },
   {
     name: "Tacos Callejeros",
@@ -30,6 +31,7 @@ export const dishes: Dish[] = [
     description: "Caldo de 18 horas, aceite de chile y panceta glaseada.",
     price: "16,90 €",
     image: ramen,
+    tag: "Popular",
   },
   {
     name: "Papas Cargadas",
@@ -42,6 +44,7 @@ export const dishes: Dish[] = [
     description: "Coulant tibio con oro comestible y helado de vainilla bourbon.",
     price: "7,90 €",
     image: dessert,
+    tag: "Popular",
   },
 ];
 
