@@ -50,8 +50,8 @@ export function Hero() {
             transition={{ delay: 0.7, duration: 0.8 }}
             className="max-w-md text-base leading-relaxed text-cream/70"
           >
-            Ingredientes frescos, recetas sin miedo y un espacio donde cada plato cuenta una historia.
-            Un sitio honesto y adictivo en pleno centro.
+            Ingredientes frescos, recetas tradicionales de Colombia y un espacio donde cada plato cuenta una historia.
+            Un sitio honesto y adictivo en pleno casco urbano de Almeria.
           </motion.p>
 
           <div className="flex flex-col items-center gap-4">
