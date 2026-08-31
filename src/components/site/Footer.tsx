@@ -44,7 +44,6 @@ export function Footer() {
             </ul>
           </div>
 
-          
 
         <p className="mt-14 text-xs tracking-widest text-cream/35 uppercase">
           © {new Date().getFullYear()} Punto Verde
