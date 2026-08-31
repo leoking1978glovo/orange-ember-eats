@@ -1,4 +1,4 @@
-import burger from "@/assets/dish-burger.jpg";
+import carneCriolla from "@/assets/Carne-en-salsa-criolla.jpg";
 import tacos from "@/assets/dish-tacos.jpg";
 import ramen from "@/assets/dish-ramen.jpg";
 import fries from "@/assets/dish-fries.jpg";
@@ -14,12 +14,12 @@ export type Dish = {
 
 export const dishes: Dish[] = [
   {
-    name: "Smash Brutal",
-    description: "Doble carne madurada, queso fundido y salsa secreta de la casa.",
+    name: "Carne en salsa criolla",
+    description: "Carne tierna cocinada lentamente en una sabrosa salsa criolla.",
     price: "14,50 €",
-    image: burger,
-    tag: "Favorito del Chef",
+    image: carneCriolla,
   },
+  
   {
     name: "Tacos Callejeros",
     description: "Trío de tacos de cochinita con pico de gallo y lima ahumada.",
