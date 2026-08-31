@@ -24,13 +24,13 @@ export function Footer() {
           <div>
             <h3 className="text-sm tracking-[0.3em] text-primary uppercase">Dónde</h3>
             <p className="mt-4 leading-relaxed text-cream/70">
-              Calle del Carbón 14
+              Calle Miguel Rua, 64
               <br />
-              28012 Madrid
+              04007 Almeria
               <br />
               España
             </p>
-            <p className="mt-4 text-cream/70">+34 910 22 44 88</p>
+            <p className="mt-4 text-cream/70">+34 950 67 45 42</p>
             <p className="text-cream/70">hola@brasa.es</p>
           </div>
 
