@@ -14,10 +14,10 @@ export type Dish = {
 
 export const dishes: Dish[] = [
   {
-    name: "Smash Brutal",
+    name: "Carne en salsa criolla",
     description: "Doble carne madurada, queso fundido y salsa secreta de la casa.",
     price: "14,50 €",
-    image: burger,
+    image: Carne-en-salsa-criolla.jpg,
     tag: "Favorito del Chef",
   },
   {
