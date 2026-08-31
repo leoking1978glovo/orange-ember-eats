@@ -5,7 +5,7 @@ const hours = [
   ["Martes – Domingo", "12:00 – 16:30"],
 ];
 
-const socials = ["Instagram", "TikTok", "X"];
+const socials = ["Instagram", "TikTok", ];
 
 export function Footer() {
   const onSubmit = (e: FormEvent) => {
