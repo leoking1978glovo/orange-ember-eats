@@ -26,11 +26,11 @@ export function Footer() {
             <p className="mt-4 leading-relaxed text-cream/70">
               Calle Miguel Rua, 64
               <br />
-              04007 Almeria
+              04007 España
               <br />
               España
             </p>
-            <p className="mt-4 text-cream/70">+34 910 22 44 88</p>
+            <p className="mt-4 text-cream/70">+34 950 67 45 42</p>
             <p className="text-cream/70">hola@punto-verde.es</p>
           </div>
 
