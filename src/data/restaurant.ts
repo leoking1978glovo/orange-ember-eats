@@ -1,5 +1,5 @@
 import carneCriolla from "@/assets/Carne-en-salsa-criolla.jpg";
-import tacos from "@/assets/dish-tacos.jpg";
+import sancochodegallina from "@/assets/dish-sancocho-de-gallina.jpg";
 import ramen from "@/assets/dish-ramen.jpg";
 import fries from "@/assets/dish-fries.jpg";
 import dessert from "@/assets/dish-dessert.jpg";
@@ -21,10 +21,10 @@ export const dishes: Dish[] = [
   },
   
   {
-    name: "Tacos Callejeros",
-    description: "Trío de tacos de cochinita con pico de gallo y lima ahumada.",
+    name: "Sancocho de gallila",
+    description: "trozos de gallina criolla, plátano verde, yuca, mazorca (choclo) y papa, cocinados en un caldo aromático con ajo, cebolla y cilantro.",
     price: "12,00 €",
-    image: tacos,
+    image: sancochodegallina,
   },
   {
     name: "Ramen Fusión",
