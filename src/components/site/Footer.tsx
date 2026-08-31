@@ -24,9 +24,9 @@ export function Footer() {
           <div>
             <h3 className="text-sm tracking-[0.3em] text-primary uppercase">Dónde</h3>
             <p className="mt-4 leading-relaxed text-cream/70">
-              Calle del Carbón 14
+              Calle Miguel Rua, 64
               <br />
-              28012 Madrid
+              04007 Almeria
               <br />
               España
             </p>
