@@ -44,34 +44,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="md:col-span-2">
-            <h3 className="text-sm tracking-[0.3em] text-primary uppercase">Newsletter</h3>
-            <p className="mt-4 text-sm text-cream/70">
-              Cartas nuevas, eventos y platos fuera de menú. Sin spam.
-            </p>
-            <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-3 sm:flex-row">
-              <input
-                required
-                type="email"
-                placeholder="tu@email.com"
-                className="flex-1 rounded-full border-2 border-cream/20 bg-transparent px-5 py-3 text-cream placeholder:text-cream/40 outline-none focus:border-primary"
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-secondary px-8 py-3 font-display tracking-tight text-ink uppercase"
-              >
-                Apuntarme
-              </button>
-            </form>
-            <div className="mt-8 flex gap-6 text-xs tracking-[0.25em] text-cream/60 uppercase">
-              {socials.map((s) => (
-                <a key={s} href="#contacto" className="transition-colors hover:text-primary">
-                  {s}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+          
 
         <p className="mt-14 text-xs tracking-widest text-cream/35 uppercase">
           © {new Date().getFullYear()} Punto Verde
