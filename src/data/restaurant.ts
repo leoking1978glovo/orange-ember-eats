@@ -1,7 +1,7 @@
 import carneCriolla from "@/assets/Carne-en-salsa-criolla.jpg";
 import sancochodegallina from "@/assets/dish-sancocho-de-gallina.jpg";
 import maduroconqueso from "@/assets/dish-maduro-con-queso.jpg";
-import fries from "@/assets/dish-fries.jpg";
+import tamalcolombiano from "@/assets/dish-tamal-colombiano.jpg";
 import dessert from "@/assets/dish-dessert.jpg";
 
 export type Dish = {
@@ -33,10 +33,10 @@ export const dishes: Dish[] = [
     image: maduroconqueso,
   },
   {
-    name: "Papas Cargadas",
-    description: "Patatas crujientes con cheddar, jalapeños y chorizo picante.",
+    name: "tamal colombiano",
+    description: "carnes de cerdo y pollo, papa y arvejas, sin llevar arroz.",
     price: "8,50 €",
-    image: fries,
+    image: tamalcolombiano,
   },
   {
     name: "Volcán de Chocolate",
