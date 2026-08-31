@@ -40,7 +40,8 @@ export function Navbar() {
           href="#top"
           className="col-start-1 justify-self-start font-display text-2xl tracking-tight text-cream md:col-start-2 md:justify-self-center md:text-3xl"
         >
-          PUNTO<span className="text-primary">VERDE</span>
+          PUNTO<span className="text-[#5F7A3A]">VERDE</span>
+
         </a>
 
         <div className="hidden justify-end gap-8 text-xs font-semibold tracking-[0.25em] text-cream uppercase md:flex">
