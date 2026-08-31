@@ -31,7 +31,7 @@ export function VideoSection() {
             El ruido de la <span className="text-fire">cocina</span>
           </h2>
           <p className="mx-auto mt-6 max-w-lg text-cream/70">
-            Doce personas, tres fuegos y un servicio que no para. Así suena cada noche en Brasa.
+            Doce personas, tres fuegos y un servicio que no para. Así suena cada noche en Punto Verde.
           </p>
         </motion.div>
       </div>

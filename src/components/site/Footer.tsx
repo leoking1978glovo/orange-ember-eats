@@ -18,7 +18,7 @@ export function Footer() {
   return (
     <footer id="contacto" className="bg-ink pt-24 pb-10">
       <div className="mx-auto max-w-[1600px] px-6 md:px-12">
-        <h2 className="text-[clamp(2.5rem,10vw,8rem)] text-cream/10">BRASA</h2>
+        <h2 className="text-[clamp(2.5rem,10vw,8rem)] text-cream/10">PUNTO VERDE</h2>
 
         <div className="mt-12 grid gap-12 border-t border-cream/15 pt-12 md:grid-cols-4">
           <div>
@@ -30,8 +30,8 @@ export function Footer() {
               <br />
               España
             </p>
-            <p className="mt-4 text-cream/70">+34 950 67 45 42</p>
-            <p className="text-cream/70">hola@brasa.es</p>
+            <p className="mt-4 text-cream/70">+34 910 22 44 88</p>
+            <p className="text-cream/70">hola@punto-verde.es</p>
           </div>
 
           <div>
@@ -76,7 +76,7 @@ export function Footer() {
         </div>
 
         <p className="mt-14 text-xs tracking-widest text-cream/35 uppercase">
-          © {new Date().getFullYear()} Brasa · Cocina urbana
+          © {new Date().getFullYear()} Punto Verde
         </p>
       </div>
     </footer>

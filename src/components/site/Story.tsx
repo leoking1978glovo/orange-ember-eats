@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import kitchen from "@/assets/story-kitchen.jpg";
 
 const stats = [
-  { value: "10", label: "Años a fuego" },
+  { value: "10", label: "Años de pasión" },
   { value: "38", label: "Platos propios" },
   { value: "4.9", label: "Valoración media" },
 ];
@@ -39,16 +39,17 @@ export function Story() {
             Nuestra historia
           </p>
           <h2 className="text-[clamp(2.5rem,7vw,5.5rem)] text-cream">
-            Empezamos con una <span className="text-fire">parrilla</span> y mucho ruido
+            Empezamos con una <span className="text-fire">idea</span> y mucho entusiasmo
           </h2>
           <p className="mt-6 leading-relaxed text-cream/70">
-            En 2016 montamos una brasa en un local diminuto del barrio. No teníamos manteles ni
-            carta impresa: solo carbón, un cuaderno y ganas de cocinar sin permiso.
+            En 2024 abrimos Punto Verde con una misión clara: crear un espacio donde la cocina
+            honesta y los ingredientes de calidad fueran los protagonistas. Sin manteles, sin
+            pretensiones, solo buena comida.
           </p>
           <p className="mt-4 leading-relaxed text-cream/70">
-            Hoy seguimos igual de tercos. Compramos cada mañana en el mercado, cocinamos a la
-            vista y servimos platos que no piden perdón. Si buscas discreción, este no es tu
-            sitio.
+            Hoy seguimos fieles a ese espíritu. Compramos cada mañana en el mercado, cocinamos
+            con cariño y servimos platos que no piden perdón. Si buscas autenticidad, este es
+            tu sitio.
           </p>
 
           <div className="mt-12 grid grid-cols-3 gap-6 border-t border-cream/15 pt-8">
