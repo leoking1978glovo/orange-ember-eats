@@ -1,6 +1,6 @@
 import carneCriolla from "@/assets/Carne-en-salsa-criolla.jpg";
 import sancochodegallina from "@/assets/dish-sancocho-de-gallina.jpg";
-import ramen from "@/assets/dish-ramen.jpg";
+import maduroconqueso from "@/assets/dish-maduro-con-queso.jpg";
 import fries from "@/assets/dish-fries.jpg";
 import dessert from "@/assets/dish-dessert.jpg";
 
@@ -27,11 +27,10 @@ export const dishes: Dish[] = [
     image: sancochodegallina,
   },
   {
-    name: "Ramen Fusión",
-    description: "Caldo de 18 horas, aceite de chile y panceta glaseada.",
+    name: "maduro con queso",
+    description: "plato tradicional latinoamericano que combina el dulzor intenso del plátano macho cocido con la nota salada y textura fundente del queso.",
     price: "16,90 €",
-    image: ramen,
-    tag: "Popular",
+    image: maduroconqueso,
   },
   {
     name: "Papas Cargadas",
