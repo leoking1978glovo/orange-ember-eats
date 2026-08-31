@@ -2,9 +2,7 @@ import type { FormEvent } from "react";
 import { toast } from "sonner";
 
 const hours = [
-  ["Lunes – Jueves", "13:00 – 16:30 · 20:00 – 23:30"],
-  ["Viernes – Sábado", "13:00 – 17:00 · 20:00 – 01:00"],
-  ["Domingo", "13:00 – 17:00"],
+  ["Martes – Domingo", "12:00 – 16:30"],
 ];
 
 const socials = ["Instagram", "TikTok", "X"];
