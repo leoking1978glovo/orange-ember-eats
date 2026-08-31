@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import heroBg from "@/assets/hero-bg.jpg";
 
-const words = ["Tradicion", "que se", "saborea"];
+const words = ["Tradicion", "que se saborea"];
 
 export function Hero() {
   return (
