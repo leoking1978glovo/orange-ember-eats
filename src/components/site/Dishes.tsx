@@ -65,7 +65,7 @@ export function Dishes() {
             transition={{ duration: 0.7 }}
             className="text-[clamp(2.75rem,8vw,6rem)] text-cream"
           >
-            Platos <span className="text-fire">estrella</span>
+            Platos <span className="text-fire">tradicionales</span>
           </motion.h2>
           <div className="flex items-center gap-6">
             <p className="text-sm tracking-widest text-cream/50 uppercase">Arrastra →</p>
