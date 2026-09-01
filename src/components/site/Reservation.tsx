@@ -35,7 +35,7 @@ export function Reservation() {
             Abrimos reservas con 30 días de antelación. Para grupos de más de 8 personas,
             llámanos directamente.
           </p>
-          <p className="mt-8 font-display text-2xl text-ink">+34 910 22 44 88</p>
+          <p className="mt-8 font-display text-2xl text-ink">+34 950 67 45 42</p>
         </motion.div>
 
         <motion.form
