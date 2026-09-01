@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { motion } from "motion/react";
 import { toast } from "sonner";
-import { SantiagoChat } from "@/components/SantiagoChat";
+import { SantiagoChat } from "../SantiagoChat";
 
 const fieldClass =
   "w-full rounded-xl border-2 border-cream/20 bg-cream/5 px-5 py-4 text-cream placeholder:text-cream/40 outline-none transition-colors focus:border-primary";
@@ -38,14 +38,13 @@ export function Reservation() {
               <span className="text-[#5F7A3A]">con Santiago</span>
             </h2>
             <p className="mt-6 max-w-sm leading-relaxed text-ink/70">
-              Abrimos reservas con 30 días de antelación. Para grupos de más de 8
-              personas, llámanos directamente.
+              Abrimos reservas con 30 días de antelación. Para grupos de más de
+              8 personas, llámanos directamente.
             </p>
             <p className="mt-8 font-display text-2xl text-ink">
               +34 950 67 45 42
             </p>
 
-            {/* Botón para abrir el chat con Santiago */}
             <motion.button
               onClick={() => setChatOpen(true)}
               whileHover={{ scale: 1.03 }}
@@ -57,7 +56,6 @@ export function Reservation() {
             </motion.button>
           </motion.div>
 
-          {/* Formulario clásico (lo dejamos como alternativa) */}
           <motion.form
             onSubmit={onSubmit}
             initial={{ opacity: 0, y: 40 }}
@@ -80,7 +78,12 @@ export function Reservation() {
                 placeholder="Email"
                 className={fieldClass}
               />
-              <input required type="date" name="fecha" className={fieldClass} />
+              <input
+                required
+                type="date"
+                name="fecha"
+                className={fieldClass}
+              />
               <input
                 required
                 type="time"
@@ -114,7 +117,6 @@ export function Reservation() {
         </div>
       </section>
 
-      {/* Widget flotante de Santiago */}
       <SantiagoChat isOpen={chatOpen} onClose={() => setChatOpen(false)} />
     </>
   );

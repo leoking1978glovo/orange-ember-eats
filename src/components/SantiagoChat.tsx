@@ -1,121 +1,103 @@
-import { useState, type FormEvent } from "react";
-import { motion } from "motion/react";
-import { toast } from "sonner";
-import { SantiagoChat } from "@/components/SantiagoChat";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
-const fieldClass =
-  "w-full rounded-xl border-2 border-cream/20 bg-cream/5 px-5 py-4 text-cream placeholder:text-cream/40 outline-none transition-colors focus:border-primary";
+interface SantiagoChatProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-export function Reservation() {
-  const [sending, setSending] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
+const RELEVANCE_AGENT_URL =
+  "https://app.relevanceai.com/agents/d7b62b/3785c80b-2f7e-5958-8205-9ab0bb7ec662/8054b867-8ce4-4250-8710-44feaa2cf640/embed-chat?hide_tool_steps=false&hide_file_uploads=false&hide_conversation_list=false&bubble_style=agent&primary_color=%23685FFF&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false&hide_description=false";
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSending(true);
-    setTimeout(() => {
-      setSending(false);
-      toast.success("¡Mesa solicitada!", {
-        description: "Te confirmamos la reserva por email en unos minutos.",
-      });
-      e.currentTarget?.reset?.();
-    }, 700);
-  };
+export function SantiagoChat({ isOpen, onClose }: SantiagoChatProps) {
+  const [loaded, setLoaded] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Solo montar en cliente (evita errores de SSR)
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    if (isOpen) {
+      window.addEventListener("keydown", handleKey);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, onClose, mounted]);
+
+  // No renderizar nada en el servidor
+  if (!mounted) return null;
 
   return (
-    <>
-      <section id="reservas" className="bg-fire py-24 md:py-40">
-        <div className="mx-auto grid max-w-[1600px] gap-14 px-6 md:grid-cols-12 md:px-12">
+    <AnimatePresence>
+      {isOpen && (
+        <>
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="md:col-span-5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm"
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 60, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 60, scale: 0.95 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="fixed bottom-6 right-6 z-[9999] flex h-[600px] w-[380px] flex-col overflow-hidden rounded-3xl border border-cream/10 bg-ink shadow-2xl md:bottom-8 md:right-8"
           >
-            <h2 className="text-[clamp(2.75rem,9vw,6.5rem)]">
-              <span className="text-white">Reserva</span>{" "}
-              <span className="text-[#5F7A3A]">con Santiago</span>
-            </h2>
-            <p className="mt-6 max-w-sm leading-relaxed text-ink/70">
-              Abrimos reservas con 30 días de antelación. Para grupos de más de 8
-              personas, llámanos directamente.
-            </p>
-            <p className="mt-8 font-display text-2xl text-ink">
-              +34 950 67 45 42
-            </p>
-
-            {/* Botón para abrir el chat con Santiago */}
-            <motion.button
-              onClick={() => setChatOpen(true)}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-[#5F7A3A] px-8 py-4 font-display text-lg tracking-tight text-white shadow-lg transition-shadow hover:shadow-xl"
-            >
-              <span>💬</span>
-              Hablar con Santiago
-            </motion.button>
-          </motion.div>
-
-          {/* Formulario clásico (alternativa) */}
-          <motion.form
-            onSubmit={onSubmit}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="rounded-3xl bg-ink p-8 md:col-span-6 md:col-start-7 md:p-10"
-          >
-            <div className="grid gap-4 md:grid-cols-2">
-              <input
-                required
-                name="nombre"
-                placeholder="Nombre"
-                className={fieldClass}
-              />
-              <input
-                required
-                type="email"
-                name="email"
-                placeholder="Email"
-                className={fieldClass}
-              />
-              <input required type="date" name="fecha" className={fieldClass} />
-              <input
-                required
-                type="time"
-                name="hora"
-                defaultValue="21:00"
-                className={fieldClass}
-              />
-              <select
-                name="personas"
-                className={`${fieldClass} md:col-span-2`}
-                defaultValue="2"
+            {/* Header verde */}
+            <div className="flex items-center justify-between border-b border-cream/10 bg-[#5F7A3A] px-5 py-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-xl">
+                  💬
+                </div>
+                <div>
+                  <h3 className="font-display text-lg font-semibold text-white">
+                    Santiago
+                  </h3>
+                  <p className="text-xs text-white/70">
+                    Agente de reservas · Online
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={onClose}
+                className="rounded-full p-2 text-xl text-white/70 transition-colors hover:bg-white/20 hover:text-white"
               >
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                  <option key={n} value={n} className="bg-ink">
-                    {n} {n === 1 ? "persona" : "personas"}
-                  </option>
-                ))}
-              </select>
+                ✕
+              </button>
             </div>
 
-            <motion.button
-              type="submit"
-              disabled={sending}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="mt-6 w-full rounded-xl bg-primary py-5 font-display text-xl tracking-tight text-primary-foreground uppercase disabled:opacity-60"
-            >
-              {sending ? "Enviando..." : "Confirmar reserva"}
-            </motion.button>
-          </motion.form>
-        </div>
-      </section>
-
-      {/* Widget flotante de Santiago */}
-      <SantiagoChat isOpen={chatOpen} onClose={() => setChatOpen(false)} />
-    </>
+            {/* Iframe */}
+            <div className="relative flex-1 bg-white">
+              {!loaded && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-white">
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#5F7A3A] border-t-transparent" />
+                  <p className="text-sm text-gray-500">
+                    Conectando con Santiago...
+                  </p>
+                </div>
+              )}
+              <iframe
+                src={RELEVANCE_AGENT_URL}
+                title="Santiago - Agente de Reservas"
+                className="h-full w-full border-0"
+                onLoad={() => setLoaded(true)}
+                allow="microphone; clipboard-write"
+              />
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 }
