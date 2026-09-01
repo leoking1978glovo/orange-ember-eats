@@ -70,7 +70,7 @@ export function Reservation() {
             whileTap={{ scale: 0.98 }}
             className="mt-6 w-full rounded-xl bg-primary py-5 font-display text-xl tracking-tight text-primary-foreground uppercase disabled:opacity-60"
           >
-            {sending ? "Enviando..." : "Confirmar reserva"}
+            {sending ? "Enviando..." : "reserva con santiago"}
           </motion.button>
         </motion.form>
       </div>
