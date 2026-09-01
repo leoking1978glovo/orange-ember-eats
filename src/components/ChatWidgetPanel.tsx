@@ -45,7 +45,6 @@ function ChatIframe({ src }: { src: string }) {
         className="h-full w-full border-0"
         onLoad={() => setLoaded(true)}
         allow="microphone; clipboard-write"
-        // SIN sandbox — Relevance AI necesita acceso a localStorage/cookies
       />
     </>
   );
