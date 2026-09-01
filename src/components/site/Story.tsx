@@ -1,12 +1,6 @@
 import { motion } from "motion/react";
 import kitchen from "@/assets/story-kitchen.jpg";
 
-const stats = [
-  { value: "10", label: "Años de pasión" },
-  { value: "38", label: "Platos propios" },
-  { value: "4.9", label: "Valoración media" },
-];
-
 export function Story() {
   return (
     <section id="nosotros" className="bg-ink py-24 md:py-40">
@@ -51,15 +45,6 @@ export function Story() {
             con cariño y servimos platos que no piden perdón. Si buscas autenticidad, este es
             tu sitio.
           </p>
-
-          <div className="mt-12 grid grid-cols-3 gap-6 border-t border-cream/15 pt-8">
-            {stats.map((s) => (
-              <div key={s.label}>
-                <p className="font-display text-4xl text-primary">{s.value}</p>
-                <p className="mt-1 text-xs tracking-widest text-cream/50 uppercase">{s.label}</p>
-              </div>
-            ))}
-          </div>
         </motion.div>
       </div>
     </section>
