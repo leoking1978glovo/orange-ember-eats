@@ -16,7 +16,7 @@ export default function ChatWidgetPanel({
 }: ChatWidgetPanelProps) {
   const [loaded, setLoaded] = useState(false);
 
-  const agentUrl = `${RELEVANCE_AGENT_URL_BASE}&_session=${chatKey}`;
+  const agentUrl = `${RELEVANCE_AGENT_URL_BASE}&_t=${Date.now()}&_session=${chatKey}`;
 
   useEffect(() => {
     setLoaded(false);
@@ -37,6 +37,7 @@ export default function ChatWidgetPanel({
         className="h-full w-full border-0"
         onLoad={() => setLoaded(true)}
         allow="microphone; clipboard-write"
+        sandbox="allow-scripts allow-forms allow-popups"
       />
     </div>
   );
