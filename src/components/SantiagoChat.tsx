@@ -57,7 +57,7 @@ export function Reservation() {
             </motion.button>
           </motion.div>
 
-          {/* Formulario clásico (lo dejamos como alternativa) */}
+          {/* Formulario clásico (alternativa) */}
           <motion.form
             onSubmit={onSubmit}
             initial={{ opacity: 0, y: 40 }}
