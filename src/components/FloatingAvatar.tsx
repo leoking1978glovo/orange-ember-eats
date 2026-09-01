@@ -1,0 +1,174 @@
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import ChatWidgetPanel from "@/components/ChatWidgetPanel";
+import { CHAT_AGENT_NAME } from "@/config/chatAgent";
+
+interface FloatingAvatarProps {
+  pendingMessage?: string | null;
+  onPendingMessageSent?: () => void;
+}
+
+export default function FloatingAvatar({
+  pendingMessage,
+  onPendingMessageSent,
+}: FloatingAvatarProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (pendingMessage && !isOpen) {
+      setIsOpen(true);
+    }
+  }, [pendingMessage, isOpen]);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
+
+  useEffect(() => {
+    const handleOpenChat = () => setIsOpen(true);
+    window.addEventListener("open-santiago-chat", handleOpenChat);
+    return () => window.removeEventListener("open-santiago-chat", handleOpenChat);
+  }, []);
+
+  return (
+    <>
+      <style>{`
+        @keyframes wave {
+          0%, 100% { transform: rotate(0deg); }
+          15% { transform: rotate(14deg); }
+          30% { transform: rotate(-8deg); }
+          45% { transform: rotate(14deg); }
+          60% { transform: rotate(-4deg); }
+          75% { transform: rotate(10deg); }
+        }
+        .animate-wave {
+          animation: wave 2s ease-in-out infinite;
+          transform-origin: 70% 70%;
+          display: inline-block;
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* AVATAR FLOTANTE */}
+      <div
+        className={`fixed bottom-6 right-6 z-50 transition-all duration-500 ease-out ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
+        }`}
+      >
+        <div className="animate-float flex items-center gap-2">
+          {/* Burbuja "Santiago" */}
+          <div className="relative whitespace-nowrap rounded-2xl bg-white px-3 py-1.5 text-[11px] font-bold text-gray-700 shadow-md pointer-events-none select-none">
+            Santiago
+            <span className="absolute -right-[3px] top-1/2 h-1.5 w-1.5 -translate-y-1/2 rotate-45 bg-white" />
+          </div>
+
+          {/* Botón avatar */}
+          <button
+            onClick={() => setIsOpen(true)}
+            className="relative flex h-16 w-16 cursor-pointer items-center justify-center rounded-full border-4 border-white bg-[#5F7A3A] shadow-lg shadow-[#5F7A3A]/30 transition-all duration-500 ease-out hover:scale-110 hover:shadow-xl hover:shadow-[#5F7A3A]/50"
+            aria-label="Abrir chat con Santiago"
+            title="Habla con Santiago"
+          >
+            <span className="text-4xl" role="img" aria-label="Chef Santiago">
+              🧑‍🍳
+            </span>
+            <span className="absolute bottom-0 right-0 z-10 h-5 w-5 rounded-full border-[3px] border-white bg-emerald-500" />
+            <span className="pointer-events-none absolute -top-3 -left-3 z-20 animate-wave text-2xl">
+              🔔
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* MODAL DEL CHAT */}
+      <AnimatePresence>
+        {isOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              aria-hidden="true"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+              className="relative flex h-[600px] w-full max-w-[420px] flex-col overflow-hidden rounded-2xl border border-[#e5e5e5] bg-white shadow-2xl"
+              role="dialog"
+              aria-label={`Chat con ${CHAT_AGENT_NAME}`}
+            >
+              {/* HEADER */}
+              <div className="flex items-center justify-between bg-[#5F7A3A] px-4 py-3 text-white">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white/50 bg-white/20">
+                    <span className="text-2xl" role="img" aria-label="Chef Santiago">
+                      🧑‍🍳
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="font-display text-sm font-bold text-white">
+                      {CHAT_AGENT_NAME}
+                    </h3>
+                    <p className="flex items-center gap-1.5 text-xs text-white/90">
+                      <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+                      En línea - Asistente de Pedidos
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="rounded-full p-2 text-white transition-colors hover:bg-white/20"
+                  aria-label="Cerrar chat"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="min-h-0 flex-1">
+                <ChatWidgetPanel
+                  className="h-full"
+                  pendingMessage={pendingMessage}
+                  onPendingMessageSent={onPendingMessageSent}
+                />
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
