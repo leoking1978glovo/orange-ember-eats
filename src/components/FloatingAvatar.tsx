@@ -72,13 +72,11 @@ export default function FloatingAvatar({
         }`}
       >
         <div className="animate-float flex items-center gap-2">
-          {/* Burbuja "Santiago" */}
           <div className="relative whitespace-nowrap rounded-2xl bg-white px-3 py-1.5 text-[11px] font-bold text-gray-700 shadow-md pointer-events-none select-none">
             Santiago
             <span className="absolute -right-[3px] top-1/2 h-1.5 w-1.5 -translate-y-1/2 rotate-45 bg-white" />
           </div>
 
-          {/* Botón avatar */}
           <button
             onClick={() => setIsOpen(true)}
             className="relative flex h-16 w-16 cursor-pointer items-center justify-center rounded-full border-4 border-white bg-[#5F7A3A] shadow-lg shadow-[#5F7A3A]/30 transition-all duration-500 ease-out hover:scale-110 hover:shadow-xl hover:shadow-[#5F7A3A]/50"
@@ -99,7 +97,7 @@ export default function FloatingAvatar({
       {/* MODAL DEL CHAT */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center md:p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -114,7 +112,7 @@ export default function FloatingAvatar({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              className="relative flex h-[600px] w-full max-w-[420px] flex-col overflow-hidden rounded-2xl border border-[#e5e5e5] bg-white shadow-2xl"
+              className="relative flex h-full w-full flex-col overflow-hidden bg-white shadow-2xl md:h-[600px] md:max-w-[420px] md:rounded-2xl md:border md:border-[#e5e5e5]"
               role="dialog"
               aria-label={`Chat con ${CHAT_AGENT_NAME}`}
             >
