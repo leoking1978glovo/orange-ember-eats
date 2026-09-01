@@ -7,7 +7,8 @@ interface SantiagoChatProps {
 }
 
 const RELEVANCE_AGENT_URL =
-  "https://app.relevanceai.com/agents/d7b62b/3785c80b-2f7e-5958-8205-9ab0bb7ec662/8054b867-8ce4-4250-8710-44feaa2cf640/embed-chat?hide_tool_steps=true&hide_file_uploads=true&hide_conversation_list=true&hide_logo=true&hide_description=true&bubble_style=agent&primary_color=%235F7A3A&input_placeholder_text=Escribe tu mensaje...";
+https://app.relevanceai.com/agents/d7b62b/dddeaa6c-88e7-5097-a36f-0ca586122cf0/48541323-e91e-4441-a065-9a456981fc99/embed-chat?hide_tool_steps=false&hide_file_uploads=false&hide_conversation_list=false&bubble_style=agent&primary_color=%23685FFF&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false&hide_description=false
+
 
 export function SantiagoChat({ isOpen, onClose }: SantiagoChatProps) {
   const [loaded, setLoaded] = useState(false);
