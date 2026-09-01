@@ -2,7 +2,7 @@ import carneCriolla from "@/assets/Carne-en-salsa-criolla.jpg";
 import sancochodegallina from "@/assets/dish-sancocho-de-gallina.jpg";
 import maduroconqueso from "@/assets/dish-maduro-con-queso.jpg";
 import tamalcolombiano from "@/assets/dish-tamal-colombiano.jpg";
-import dessert from "@/assets/dish-dessert.jpg";
+import bandejapaisa from "@/assets/dish-bandeja-paisa.jpg";
 
 export type Dish = {
   name: string;
@@ -39,11 +39,10 @@ export const dishes: Dish[] = [
     image: tamalcolombiano,
   },
   {
-    name: "Volcán de Chocolate",
-    description: "Coulant tibio con oro comestible y helado de vainilla bourbon.",
+    name: "Bndeja Paisa",
+    description: "PLato colombiano que lleva, arroz blanco, carne moida, chicharron, chorizo, huevo frito, platano maduro, aguacate, arepa.",
     price: "7,90 €",
-    image: dessert,
-    tag: "Popular",
+    image: bandejapaisa,
   },
 ];
 
