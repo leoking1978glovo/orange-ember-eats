@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 
 interface ChatWidgetPanelProps {
   className?: string;
-  pendingMessage?: string | null;
-  onPendingMessageSent?: () => void;
   chatKey?: number;
 }
 
@@ -14,31 +12,41 @@ export default function ChatWidgetPanel({
   className,
   chatKey = 0,
 }: ChatWidgetPanelProps) {
-  const [loaded, setLoaded] = useState(false);
-
-  const agentUrl = `${RELEVANCE_AGENT_URL_BASE}&_t=${Date.now()}&_session=${chatKey}`;
+  const [sessionId, setSessionId] = useState(() => `${chatKey}-${Date.now()}`);
 
   useEffect(() => {
-    setLoaded(false);
+    setSessionId(`${chatKey}-${Date.now()}`);
   }, [chatKey]);
+
+  const agentUrl = `${RELEVANCE_AGENT_URL_BASE}&_t=${Date.now()}&_session=${sessionId}`;
 
   return (
     <div className={`relative ${className || ""}`}>
+      <ChatIframe key={sessionId} src={agentUrl} />
+    </div>
+  );
+}
+
+function ChatIframe({ src }: { src: string }) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <>
       {!loaded && (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-white">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#5F7A3A] border-t-transparent" />
           <p className="text-sm text-gray-500">Conectando con Santiago...</p>
         </div>
       )}
+
       <iframe
-        key={chatKey}
-        src={agentUrl}
+        src={src}
         title="Santiago - Agente de Reservas"
         className="h-full w-full border-0"
         onLoad={() => setLoaded(true)}
         allow="microphone; clipboard-write"
-        sandbox="allow-scripts allow-forms allow-popups"
+        // SIN sandbox — Relevance AI necesita acceso a localStorage/cookies
       />
-    </div>
+    </>
   );
 }
