@@ -1,58 +1,46 @@
-import { useState } from "react";
-import ChatWidgetPanel from "@/components/ChatWidgetPanel";
+import { createFileRoute } from "@tanstack/react-router";
+import { Navbar } from "@/components/site/Navbar";
+import { Hero } from "@/components/site/Hero";
+import { Marquee } from "@/components/site/Marquee";
+import { Dishes } from "@/components/site/Dishes";
+import { MenuPreview } from "@/components/site/MenuPreview";
+import { Story } from "@/components/site/Story";
+import { VideoSection } from "@/components/site/VideoSection";
+import { Reservation } from "@/components/site/Reservation";
+import { Footer } from "@/components/site/Footer";
 
-// ... tu código actual del Index ...
+const title = "Punto Verde";
+const description =
+  "Punto Verde — Cocina con alma y sabor natural. Un espacio donde cada plato cuenta una historia.";
 
-export default function Index() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [chatKey, setChatKey] = useState(0);
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "restaurant" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Index,
+});
 
-  const handleNewConversation = () => {
-    setChatKey((prev) => prev + 1);
-  };
-
+function Index() {
   return (
-    <div className="relative min-h-screen">
-      
-      {/* ===== TODO TU CONTENIDO ACTUAL (hero, menú, about, etc.) ===== */}
-      {/* NO BORRES NADA DE LO QUE YA TIENES */}
-
-
-      {/* ===== CHAT FLOTANTE - PEGA ESTO AL FINAL ===== */}
-      
-      {/* Botón flotante 💬 */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#5F7A3A] text-white shadow-lg hover:scale-105 transition-transform"
-      >
-        {isOpen ? "✕" : "💬"}
-      </button>
-
-      {/* Panel del chat */}
-      {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 flex h-[600px] w-[380px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl">
-          
-          {/* Header */}
-          <div className="flex items-center justify-between bg-[#5F7A3A] px-4 py-3">
-            <span className="font-semibold text-white text-sm">
-              Santiago - Reservas
-            </span>
-            <button
-              onClick={handleNewConversation}
-              className="rounded px-2 py-1 text-xs text-white hover:bg-white/20"
-            >
-              🔄 Nueva
-            </button>
-          </div>
-
-          {/* Iframe */}
-          <div className="flex-1">
-            <ChatWidgetPanel chatKey={chatKey} className="h-full w-full" />
-          </div>
-          
-        </div>
-      )}
-
+    <div className="bg-ink">
+      <Navbar />
+      <main>
+        <Hero />
+        <Marquee />
+        <Dishes />
+        <MenuPreview />
+        <Story />
+        <VideoSection />
+        <Reservation />
+      </main>
+      <Footer />
     </div>
   );
 }
