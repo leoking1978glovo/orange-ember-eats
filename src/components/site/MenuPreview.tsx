@@ -15,10 +15,6 @@ export function MenuPreview() {
           >
             La carta
           </motion.h2>
-          <p className="text-sm leading-relaxed text-muted-foreground md:col-span-4 md:col-start-9">
-            Cambiamos platos cada temporada según lo que traiga el mercado. Esto es solo un
-            adelanto de lo que te espera en la mesa.
-          </p>
         </div>
 
         <div className="mt-16 grid gap-x-14 gap-y-16 md:grid-cols-2 xl:grid-cols-4">
