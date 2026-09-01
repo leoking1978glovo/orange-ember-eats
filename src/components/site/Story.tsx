@@ -43,7 +43,7 @@ export function Story() {
           </h2>
           <p className="mt-6 leading-relaxed text-cream/70">
             En 2024 abrimos Punto Verde con una misión clara: crear un espacio donde la cocina
-            honesta y los ingredientes de calidad fueran los protagonistas. Sin manteles, sin
+            Colombiana y los ingredientes de calidad fueran los protagonistas. Sin manteles, sin
             pretensiones, solo buena comida.
           </p>
           <p className="mt-4 leading-relaxed text-cream/70">
