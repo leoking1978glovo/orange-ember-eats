@@ -7,17 +7,25 @@ interface SantiagoChatProps {
 }
 
 const RELEVANCE_AGENT_URL =
-https://app.relevanceai.com/agents/d7b62b/dddeaa6c-88e7-5097-a36f-0ca586122cf0/48541323-e91e-4441-a065-9a456981fc99/embed-chat?hide_tool_steps=false&hide_file_uploads=false&hide_conversation_list=false&bubble_style=agent&primary_color=%23685FFF&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false&hide_description=false
-
+  "https://app.relevanceai.com/agents/d7b62b/3785c80b-2f7e-5958-8205-9ab0bb7ec662/8054b867-8ce4-4250-8710-44feaa2cf640/embed-chat?hide_tool_steps=true&hide_file_uploads=true&hide_conversation_list=true&hide_logo=true&hide_description=true&bubble_style=agent&primary_color=%235F7A3A&input_placeholder_text=Escribe tu mensaje...";
 
 export function SantiagoChat({ isOpen, onClose }: SantiagoChatProps) {
   const [loaded, setLoaded] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [chatSessionKey, setChatSessionKey] = useState(0); // ← NUEVO: fuerza remount
 
-  // Solo montar en cliente (evita errores de SSR)
+  // Solo montar en cliente
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // ← NUEVO: cada vez que se abre, genera una nueva sesión
+  useEffect(() => {
+    if (isOpen) {
+      setLoaded(false);
+      setChatSessionKey((prev) => prev + 1);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -34,8 +42,10 @@ export function SantiagoChat({ isOpen, onClose }: SantiagoChatProps) {
     };
   }, [isOpen, onClose, mounted]);
 
-  // No renderizar nada en el servidor
   if (!mounted) return null;
+
+  // ← NUEVO: cache-buster para forzar carga fresca en el iframe
+  const iframeSrc = `${RELEVANCE_AGENT_URL}&_cb=${Date.now()}`;
 
   return (
     <AnimatePresence>
@@ -49,13 +59,14 @@ export function SantiagoChat({ isOpen, onClose }: SantiagoChatProps) {
             className="fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm"
           />
           <motion.div
+            key={`chat-modal-${chatSessionKey}`} // ← NUEVO: destruye y recrea todo el modal
             initial={{ opacity: 0, y: 60, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 60, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="fixed bottom-6 right-6 z-[9999] flex h-[600px] w-[380px] flex-col overflow-hidden rounded-3xl border border-cream/10 bg-ink shadow-2xl md:bottom-8 md:right-8"
           >
-            {/* Header verde */}
+            {/* Header */}
             <div className="flex items-center justify-between border-b border-cream/10 bg-[#5F7A3A] px-5 py-4">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-xl">
@@ -89,7 +100,8 @@ export function SantiagoChat({ isOpen, onClose }: SantiagoChatProps) {
                 </div>
               )}
               <iframe
-                src={RELEVANCE_AGENT_URL}
+                key={`iframe-${chatSessionKey}`} // ← NUEVO: fuerza recreación del iframe
+                src={iframeSrc}
                 title="Santiago - Agente de Reservas"
                 className="h-full w-full border-0"
                 onLoad={() => setLoaded(true)}
