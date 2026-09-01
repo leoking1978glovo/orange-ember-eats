@@ -13,6 +13,7 @@ export default function FloatingAvatar({
   onPendingMessageSent,
 }: FloatingAvatarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -23,22 +24,43 @@ export default function FloatingAvatar({
   useEffect(() => {
     if (pendingMessage && !isOpen) {
       setIsOpen(true);
+      setIsMinimized(false);
     }
   }, [pendingMessage, isOpen]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
+      if (e.key === "Escape") {
+        if (!isMinimized) setIsMinimized(true);
+      }
     };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
+  }, [isMinimized]);
 
   useEffect(() => {
-    const handleOpenChat = () => setIsOpen(true);
+    const handleOpenChat = () => {
+      setIsOpen(true);
+      setIsMinimized(false);
+    };
     window.addEventListener("open-santiago-chat", handleOpenChat);
     return () => window.removeEventListener("open-santiago-chat", handleOpenChat);
   }, []);
+
+  const handleAvatarClick = () => {
+    if (isOpen && isMinimized) {
+      setIsMinimized(false);
+    } else {
+      setIsOpen(true);
+      setIsMinimized(false);
+    }
+  };
+
+  const handleMinimize = () => setIsMinimized(true);
+  const handleClose = () => {
+    setIsOpen(false);
+    setIsMinimized(false);
+  };
 
   return (
     <>
@@ -78,7 +100,7 @@ export default function FloatingAvatar({
           </div>
 
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={handleAvatarClick}
             className="relative flex h-16 w-16 cursor-pointer items-center justify-center rounded-full border-4 border-white bg-[#5F7A3A] shadow-lg shadow-[#5F7A3A]/30 transition-all duration-500 ease-out hover:scale-110 hover:shadow-xl hover:shadow-[#5F7A3A]/50"
             aria-label="Abrir chat con Santiago"
             title="Habla con Santiago"
@@ -97,19 +119,29 @@ export default function FloatingAvatar({
       {/* MODAL DEL CHAT */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center md:p-4">
+          <div
+            className={`fixed inset-0 z-[100] flex items-center justify-center md:p-4 ${
+              isMinimized
+                ? "pointer-events-none opacity-0"
+                : "pointer-events-auto opacity-100"
+            }`}
+          >
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={{ opacity: isMinimized ? 0 : 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
+              onClick={handleMinimize}
               className="absolute inset-0 bg-black/60 backdrop-blur-sm"
               aria-hidden="true"
             />
 
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
+              animate={{
+                opacity: isMinimized ? 0 : 1,
+                scale: isMinimized ? 0.8 : 1,
+                y: isMinimized ? 100 : 0,
+              }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
               className="relative flex h-full w-full flex-col overflow-hidden bg-white shadow-2xl md:h-[600px] md:max-w-[420px] md:rounded-2xl md:border md:border-[#e5e5e5]"
@@ -134,26 +166,54 @@ export default function FloatingAvatar({
                     </p>
                   </div>
                 </div>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="rounded-full p-2 text-white transition-colors hover:bg-white/20"
-                  aria-label="Cerrar chat"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+
+                {/* BOTONES: MINIMIZAR + CERRAR */}
+                <div className="flex items-center gap-1">
+                  {/* MINIMIZAR (barrita) */}
+                  <button
+                    onClick={handleMinimize}
+                    className="rounded-full p-2 text-white transition-colors hover:bg-white/20"
+                    aria-label="Minimizar chat"
+                    title="Minimizar"
                   >
-                    <path d="M18 6 6 18" />
-                    <path d="m6 6 12 12" />
-                  </svg>
-                </button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 12h14" />
+                    </svg>
+                  </button>
+
+                  {/* CERRAR (X) */}
+                  <button
+                    onClick={handleClose}
+                    className="rounded-full p-2 text-white transition-colors hover:bg-white/20"
+                    aria-label="Cerrar chat"
+                    title="Cerrar"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M18 6 6 18" />
+                      <path d="m6 6 12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
 
               <div className="min-h-0 flex-1">
