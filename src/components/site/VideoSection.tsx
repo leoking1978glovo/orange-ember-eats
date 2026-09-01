@@ -25,13 +25,12 @@ export function VideoSection() {
           transition={{ duration: 0.8 }}
         >
           <p className="mb-6 text-xs font-semibold tracking-[0.4em] text-secondary uppercase">
-            Entre bambalinas
           </p>
           <h2 className="mx-auto max-w-[14ch] text-[clamp(2.75rem,10vw,7rem)] text-cream">
             El ruido de la <span className="text-fire">cocina</span>
           </h2>
           <p className="mx-auto mt-6 max-w-lg text-cream/70">
-            Doce personas, tres fuegos y un servicio que no para. Así suena cada noche en Punto Verde.
+            Tres personas, tres fuegos y un servicio que no para. Así suena cada dia en Punto Verde.
           </p>
         </motion.div>
       </div>
