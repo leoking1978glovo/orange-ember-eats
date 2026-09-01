@@ -15,6 +15,7 @@ export default function FloatingAvatar({
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [chatKey, setChatKey] = useState(0); // ← NUEVO: contador para forzar nueva conversación
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 1000);
@@ -57,9 +58,11 @@ export default function FloatingAvatar({
   };
 
   const handleMinimize = () => setIsMinimized(true);
+
   const handleClose = () => {
     setIsOpen(false);
     setIsMinimized(false);
+    setChatKey((prev) => prev + 1); // ← NUEVO: incrementa la key para borrar la conversación
   };
 
   return (
@@ -219,6 +222,7 @@ export default function FloatingAvatar({
               <div className="min-h-0 flex-1">
                 <ChatWidgetPanel
                   className="h-full"
+                  chatKey={chatKey} // ← PASA LA KEY AL PANEL
                   pendingMessage={pendingMessage}
                   onPendingMessageSent={onPendingMessageSent}
                 />
