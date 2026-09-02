@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "motion/react";
 import ChatWidgetPanel from "@/components/ChatWidgetPanel";
 import { CHAT_AGENT_NAME } from "@/config/chatAgent";
 
-// Debe coincidir con el CHAT_STORAGE_KEY de ChatWidgetPanel.tsx
 const CHAT_AGENT_ID = '8054b867-8ce4-4250-8710-44feaa2cf640';
 const CHAT_STORAGE_KEY = `r-${CHAT_AGENT_ID}`;
 

@@ -52,7 +52,6 @@ export function Navbar() {
               {l.label}
             </a>
           ))}
-          {/* BOTÓN DEL CARRITO */}
           <button
             onClick={openCart}
             className="relative p-2 rounded-full hover:bg-white/10 transition-colors"
@@ -67,10 +66,7 @@ export function Navbar() {
         </div>
 
         <div className="col-start-3 flex justify-end md:hidden">
-          <button
-            onClick={openCart}
-            className="relative p-2 mr-2"
-          >
+          <button onClick={openCart} className="relative p-2 mr-2">
             <ShoppingCart className="h-5 w-5 text-cream" />
             {totalItems > 0 && (
               <span className="absolute -top-1 -right-1 bg-[#5F7A3A] text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full">

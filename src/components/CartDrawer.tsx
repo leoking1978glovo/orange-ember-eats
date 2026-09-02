@@ -30,7 +30,6 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -38,8 +37,6 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
             onClick={onClose}
             className="fixed inset-0 z-[150] bg-black/50 backdrop-blur-sm"
           />
-
-          {/* Drawer */}
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -47,7 +44,6 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="fixed right-0 top-0 bottom-0 z-[160] w-full max-w-md bg-white shadow-2xl flex flex-col"
           >
-            {/* Header */}
             <div className="flex items-center justify-between p-6 border-b">
               <div className="flex items-center gap-3">
                 <ShoppingBag className="h-6 w-6 text-[#5F7A3A]" />
@@ -56,15 +52,11 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
                   {items.reduce((sum, i) => sum + i.quantity, 0)}
                 </span>
               </div>
-              <button
-                onClick={onClose}
-                className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-              >
+              <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <X className="h-5 w-5 text-gray-500" />
               </button>
             </div>
 
-            {/* Items */}
             <div className="flex-1 overflow-y-auto p-6">
               {items.length === 0 ? (
                 <div className="text-center py-12">
@@ -77,10 +69,7 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
               ) : (
                 <ul className="space-y-4">
                   {items.map((item) => (
-                    <li
-                      key={item.name}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-xl"
-                    >
+                    <li key={item.name} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
                       <div>
                         <p className="font-semibold text-ink">{item.name}</p>
                         <p className="text-sm text-[#5F7A3A] font-display">
@@ -99,7 +88,6 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
               )}
             </div>
 
-            {/* Footer */}
             {items.length > 0 && (
               <div className="p-6 border-t space-y-3">
                 <button

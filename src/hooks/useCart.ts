@@ -8,59 +8,90 @@ export type CartItem = {
   quantity: number;
 };
 
-export function useCart() {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+// ═══════════════════════════════════════════════════════════════
+// STORE GLOBAL (todos los componentes ven el mismo carrito)
+// ═══════════════════════════════════════════════════════════════
+let globalItems: CartItem[] = [];
+let globalIsOpen = false;
+const listeners = new Set<() => void>();
 
-  // Cargar del localStorage al montar
-  useEffect(() => {
-    const stored = localStorage.getItem(CART_KEY);
-    if (stored) {
-      try {
-        setItems(JSON.parse(stored));
-      } catch {
-        localStorage.removeItem(CART_KEY);
-      }
+function notify() {
+  listeners.forEach((cb) => cb());
+}
+
+function loadFromStorage() {
+  const stored = localStorage.getItem(CART_KEY);
+  if (stored) {
+    try {
+      globalItems = JSON.parse(stored);
+    } catch {
+      localStorage.removeItem(CART_KEY);
     }
+  }
+}
+
+function saveToStorage() {
+  localStorage.setItem(CART_KEY, JSON.stringify(globalItems));
+}
+
+// Cargar al inicio de la app
+loadFromStorage();
+// ═══════════════════════════════════════════════════════════════
+
+export function useCart() {
+  const [, forceUpdate] = useState({});
+
+  // Suscribirse a cambios del store global
+  useEffect(() => {
+    const cb = () => forceUpdate({});
+    listeners.add(cb);
+    return () => listeners.delete(cb);
   }, []);
 
-  // Guardar en localStorage cuando cambie
-  useEffect(() => {
-    localStorage.setItem(CART_KEY, JSON.stringify(items));
-  }, [items]);
-
   const addItem = useCallback((name: string, price: string) => {
-    setItems((prev) => {
-      const existing = prev.find((i) => i.name === name);
-      if (existing) {
-        return prev.map((i) =>
-          i.name === name ? { ...i, quantity: i.quantity + 1 } : i
-        );
-      }
-      return [...prev, { name, price, quantity: 1 }];
-    });
+    const existing = globalItems.find((i) => i.name === name);
+    if (existing) {
+      globalItems = globalItems.map((i) =>
+        i.name === name ? { ...i, quantity: i.quantity + 1 } : i
+      );
+    } else {
+      globalItems = [...globalItems, { name, price, quantity: 1 }];
+    }
+    saveToStorage();
+    notify();
   }, []);
 
   const removeItem = useCallback((name: string) => {
-    setItems((prev) => prev.filter((i) => i.name !== name));
+    globalItems = globalItems.filter((i) => i.name !== name);
+    saveToStorage();
+    notify();
   }, []);
 
   const clearCart = useCallback(() => {
-    setItems([]);
+    globalItems = [];
+    saveToStorage();
+    notify();
   }, []);
 
-  const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+  const openCart = useCallback(() => {
+    globalIsOpen = true;
+    notify();
+  }, []);
 
-  const openCart = useCallback(() => setIsOpen(true), []);
-  const closeCart = useCallback(() => setIsOpen(false), []);
+  const closeCart = useCallback(() => {
+    globalIsOpen = false;
+    notify();
+  }, []);
+
+  const totalItems = globalItems.reduce((sum, i) => sum + i.quantity, 0);
 
   return {
-    items,
+    items: globalItems,
     addItem,
     removeItem,
     clearCart,
     totalItems,
-    isOpen,
+    isOpen: globalIsOpen,
     openCart,
     closeCart,
   };

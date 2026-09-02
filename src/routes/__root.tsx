@@ -11,7 +11,7 @@ import { useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import FloatingAvatar from "@/components/FloatingAvatar";
 import { CartDrawer } from "@/components/CartDrawer";
-import { useCart } from "@/hooks/useCart";
+import { CartProvider, useCart } from "@/hooks/useCart";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -130,16 +130,18 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <Toaster position="top-center" />
-      <FloatingAvatar />
-      <CartDrawer
-        isOpen={cart.isOpen}
-        onClose={cart.closeCart}
-        items={cart.items}
-        onRemove={cart.removeItem}
-        onClear={cart.clearCart}
-      />
+      <CartProvider>
+        <Outlet />
+        <Toaster position="top-center" />
+        <FloatingAvatar />
+        <CartDrawer
+          isOpen={cart.isOpen}
+          onClose={cart.closeCart}
+          items={cart.items}
+          onRemove={cart.removeItem}
+          onClear={cart.clearCart}
+        />
+      </CartProvider>
     </QueryClientProvider>
   );
 }
