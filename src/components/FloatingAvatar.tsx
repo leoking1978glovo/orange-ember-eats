@@ -20,6 +20,7 @@ export default function FloatingAvatar({
   const [isMinimized, setIsMinimized] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [chatKey, setChatKey] = useState(0);
+  const [pendingMessageFromCart, setPendingMessageFromCart] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 1000);
@@ -44,9 +45,15 @@ export default function FloatingAvatar({
   }, [isMinimized]);
 
   useEffect(() => {
-    const handleOpenChat = () => {
+    const handleOpenChat = (e: Event) => {
+      const customEvent = e as CustomEvent;
       setIsOpen(true);
       setIsMinimized(false);
+      if (customEvent.detail?.message) {
+        setTimeout(() => {
+          setPendingMessageFromCart(customEvent.detail.message);
+        }, 500);
+      }
     };
     window.addEventListener("open-santiago-chat", handleOpenChat);
     return () => window.removeEventListener("open-santiago-chat", handleOpenChat);
@@ -137,7 +144,15 @@ export default function FloatingAvatar({
                 </div>
               </div>
               <div className="min-h-0 flex-1">
-                <ChatWidgetPanel key={chatKey} className="h-full" pendingMessage={pendingMessage} onPendingMessageSent={onPendingMessageSent} />
+                <ChatWidgetPanel
+                  key={chatKey}
+                  className="h-full"
+                  pendingMessage={pendingMessage || pendingMessageFromCart}
+                  onPendingMessageSent={() => {
+                    setPendingMessageFromCart(null);
+                    onPendingMessageSent?.();
+                  }}
+                />
               </div>
             </motion.div>
           </div>

@@ -10,6 +10,8 @@ import {
 import { useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import FloatingAvatar from "@/components/FloatingAvatar";
+import { CartDrawer } from "@/components/CartDrawer";
+import { useCart } from "@/hooks/useCart";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -124,12 +126,20 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const cart = useCart();
 
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
       <Toaster position="top-center" />
       <FloatingAvatar />
+      <CartDrawer
+        isOpen={cart.isOpen}
+        onClose={cart.closeCart}
+        items={cart.items}
+        onRemove={cart.removeItem}
+        onClear={cart.clearCart}
+      />
     </QueryClientProvider>
   );
 }
