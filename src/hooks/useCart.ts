@@ -8,9 +8,7 @@ export type CartItem = {
   quantity: number;
 };
 
-// ═══════════════════════════════════════════════════════════════
-// STORE GLOBAL (todos los componentes ven el mismo carrito)
-// ═══════════════════════════════════════════════════════════════
+// Store global (todos los componentes ven el mismo carrito)
 let globalItems: CartItem[] = [];
 let globalIsOpen = false;
 const listeners = new Set<() => void>();
@@ -34,14 +32,11 @@ function saveToStorage() {
   localStorage.setItem(CART_KEY, JSON.stringify(globalItems));
 }
 
-// Cargar al inicio de la app
 loadFromStorage();
-// ═══════════════════════════════════════════════════════════════
 
 export function useCart() {
   const [, forceUpdate] = useState({});
 
-  // Suscribirse a cambios del store global
   useEffect(() => {
     const cb = () => forceUpdate({});
     listeners.add(cb);

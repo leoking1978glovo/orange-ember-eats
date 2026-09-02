@@ -1,16 +1,10 @@
 import { X, ShoppingBag, Trash2, Send } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import type { CartItem } from "@/hooks/useCart";
+import { useCart } from "@/hooks/useCart";
 
-interface CartDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
-  items: CartItem[];
-  onRemove: (name: string) => void;
-  onClear: () => void;
-}
+export function CartDrawer() {
+  const { items, isOpen, closeCart, removeItem, clearCart } = useCart();
 
-export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDrawerProps) {
   const handleCheckout = () => {
     if (items.length === 0) return;
 
@@ -23,7 +17,7 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
     window.dispatchEvent(
       new CustomEvent("open-santiago-chat", { detail: { message } })
     );
-    onClose();
+    closeCart();
   };
 
   return (
@@ -34,7 +28,7 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={closeCart}
             className="fixed inset-0 z-[150] bg-black/50 backdrop-blur-sm"
           />
           <motion.div
@@ -52,7 +46,7 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
                   {items.reduce((sum, i) => sum + i.quantity, 0)}
                 </span>
               </div>
-              <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-100 transition-colors">
+              <button onClick={closeCart} className="p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <X className="h-5 w-5 text-gray-500" />
               </button>
             </div>
@@ -77,7 +71,7 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
                         </p>
                       </div>
                       <button
-                        onClick={() => onRemove(item.name)}
+                        onClick={() => removeItem(item.name)}
                         className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -98,7 +92,7 @@ export function CartDrawer({ isOpen, onClose, items, onRemove, onClear }: CartDr
                   Tramitar pedido con Santiago
                 </button>
                 <button
-                  onClick={onClear}
+                  onClick={clearCart}
                   className="w-full py-2 text-sm text-gray-400 hover:text-red-500 transition-colors"
                 >
                   Vaciar carrito
