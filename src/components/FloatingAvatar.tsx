@@ -3,8 +3,12 @@ import { motion, AnimatePresence } from "motion/react";
 import ChatWidgetPanel from "@/components/ChatWidgetPanel";
 import { CHAT_AGENT_NAME } from "@/config/chatAgent";
 
-// Debe coincidir con el CHAT_STORAGE_KEY de ChatWidgetPanel.tsx
-const CHAT_STORAGE_KEY = "punto-verde-chat-session-v2";
+// ═══════════════════════════════════════════════════════════════
+// CLAVE CORREGIDA: debe coincidir con ChatWidgetPanel.tsx
+// ═══════════════════════════════════════════════════════════════
+const CHAT_AGENT_ID = '48541323-e91e-4441-a065-9a456981fc99';
+const CHAT_STORAGE_KEY = `r-${CHAT_AGENT_ID}`;
+// ═══════════════════════════════════════════════════════════════
 
 interface FloatingAvatarProps {
   pendingMessage?: string | null;
