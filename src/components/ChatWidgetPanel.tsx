@@ -12,8 +12,7 @@ export default function ChatWidgetPanel({
   className,
   chatKey = 0,
 }: ChatWidgetPanelProps) {
-  const agentUrl = `${RELEVANCE_AGENT_URL_BASE}&_t=${Date.now()}`;
-
+  const agentUrl = `${RELEVANCE_AGENT_URL_BASE}&_t=${Date.now()}&_session=${chatKey}`;
   return (
     <div className={`relative ${className || ""}`}>
       <ChatIframe key={chatKey} src={agentUrl} />
