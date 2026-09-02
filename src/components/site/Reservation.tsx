@@ -1,28 +1,15 @@
-import { useState, type FormEvent } from "react";
 import { motion } from "motion/react";
-import { toast } from "sonner";
-
-const fieldClass =
-  "w-full rounded-xl border-2 border-cream/20 bg-cream/5 px-5 py-4 text-cream placeholder:text-cream/40 outline-none transition-colors focus:border-primary";
+import { MessageCircle } from "lucide-react";
 
 export function Reservation() {
-  const [sending, setSending] = useState(false);
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSending(true);
-    setTimeout(() => {
-      setSending(false);
-      toast.success("¡Mesa solicitada!", {
-        description: "Te confirmamos la reserva por email en unos minutos.",
-      });
-      e.currentTarget?.reset?.();
-    }, 700);
+  const handleOpenChat = () => {
+    window.dispatchEvent(new CustomEvent("open-santiago-chat"));
   };
 
   return (
     <section id="reservas" className="bg-fire py-24 md:py-40">
-      <div className="mx-auto grid max-w-[1600px] gap-14 px-6 md:grid-cols-12 md:px-12">
+      <div className="mx-auto grid max-w-[1600px] gap-14 px-6 md:grid-cols-12 md:px-12 items-center">
+        {/* TEXTO IZQUIERDA */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -38,38 +25,38 @@ export function Reservation() {
           <p className="mt-8 font-display text-2xl text-ink">+34 950 67 45 42</p>
         </motion.div>
 
-        <motion.form
-          onSubmit={onSubmit}
+        {/* TARJETA DEL CHEF SANTIAGO */}
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="rounded-3xl bg-ink p-8 md:col-span-6 md:col-start-7 md:p-10"
+          className="rounded-3xl bg-ink p-8 md:col-span-6 md:col-start-7 md:p-10 flex flex-col items-center text-center"
         >
-          <div className="grid gap-4 md:grid-cols-2">
-            <input required name="nombre" placeholder="Nombre" className={fieldClass} />
-            <input required type="email" name="email" placeholder="Email" className={fieldClass} />
-            <input required type="date" name="fecha" className={fieldClass} />
-            <input required type="time" name="hora" defaultValue="21:00" className={fieldClass} />
-            <select name="personas" className={`${fieldClass} md:col-span-2`} defaultValue="2">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                <option key={n} value={n} className="bg-ink">
-                  {n} {n === 1 ? "persona" : "personas"}
-                </option>
-              ))}
-            </select>
+          {/* IMAGEN DEL CHEF */}
+          <div className="relative">
+            <div className="text-[8rem] md:text-[10rem] leading-none">🧑‍🍳</div>
+            <span className="absolute bottom-2 right-2 h-6 w-6 rounded-full bg-emerald-500 border-4 border-ink" />
           </div>
 
+          <h3 className="mt-6 font-display text-2xl text-cream">
+            Santiago, tu asistente de reservas
+          </h3>
+          <p className="mt-3 max-w-xs text-cream/60 leading-relaxed">
+            Habla conmigo y te ayudo a reservar tu mesa en segundos. También puedo resolver dudas sobre el menú.
+          </p>
+
+          {/* BOTÓN RESERVA CON SANTIAGO */}
           <motion.button
-            type="submit"
-            disabled={sending}
+            onClick={handleOpenChat}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="mt-6 w-full rounded-xl bg-primary py-5 font-display text-xl tracking-tight text-primary-foreground uppercase disabled:opacity-60"
+            className="mt-8 w-full rounded-xl bg-primary py-5 font-display text-xl tracking-tight text-primary-foreground uppercase flex items-center justify-center gap-3"
           >
-            {sending ? "Enviando..." : "Confirmar reserva"}
+            <MessageCircle className="h-6 w-6" />
+            Reserva con Santiago
           </motion.button>
-        </motion.form>
+        </motion.div>
       </div>
     </section>
   );
