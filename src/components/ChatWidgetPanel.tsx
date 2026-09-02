@@ -4,17 +4,16 @@ import {
   Agent,
   Client,
   Key,
-  REGION_EU,
   type AnyTaskMessage,
   type Task,
 } from '@relevanceai/sdk';
 
 // ═══════════════════════════════════════════════════════════════
-// CONFIGURACIÓN CORRECTA (del sitio que funciona)
+// CONFIGURACIÓN NUEVA AGENTE
 // ═══════════════════════════════════════════════════════════════
-const CHAT_AGENT_ID = '48541323-e91e-4441-a065-9a456981fc99';
-const CHAT_AGENT_PROJECT = 'dddeaa6c-88e7-5097-a36f-0ca586122cf0';
-const CHAT_AGENT_REGION = REGION_EU;
+const CHAT_AGENT_ID = '8054b867-8ce4-4250-8710-44feaa2cf640';
+const CHAT_AGENT_PROJECT = '3785c80b-2f7e-5958-8205-9ab0bb7ec662';
+const CHAT_AGENT_REGION = 'd7b62b';
 const CHAT_AGENT_NAME = 'Santiago';
 const CHAT_STORAGE_KEY = `r-${CHAT_AGENT_ID}`;
 // ═══════════════════════════════════════════════════════════════
