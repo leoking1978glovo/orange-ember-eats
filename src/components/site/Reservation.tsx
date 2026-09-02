@@ -19,7 +19,7 @@ export function Reservation() {
         >
           <h2 className="text-[clamp(2.75rem,9vw,6.5rem)] text-ink">Reserva tu mesa</h2>
           <p className="mt-6 max-w-sm leading-relaxed text-ink/70">
-            Abrimos reservas con 30 días de antelación. Para grupos de más de 8 personas,
+            Abrimos reservas con antelación. Para grupos de más de 8 personas,
             llámanos directamente.
           </p>
           <p className="mt-8 font-display text-2xl text-ink">+34 950 67 45 42</p>
