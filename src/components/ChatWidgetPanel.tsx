@@ -196,13 +196,13 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
     <div className={`flex flex-col h-full bg-white ${className}`} data-chat-widget>
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1 bg-white" aria-live="polite">
         {isLoading && (
-          <p className="text-sm text-[#666666] text-center py-8">Conectando con {CHAT_AGENT_NAME}...</p>
+          <p className="text-lg text-[#666666] text-center py-8">Conectando con {CHAT_AGENT_NAME}...</p>
         )}
         {error && (
-          <p className="text-sm text-[#ef233c] text-center py-4 px-3 rounded-lg bg-[#f5f5f5]">{error}</p>
+          <p className="text-lg text-[#ef233c] text-center py-4 px-3 rounded-lg bg-[#f5f5f5]">{error}</p>
         )}
         {!isLoading && !error && messages.length === 0 && !pendingMessage && (
-          <p className="text-sm text-[#666666] text-center py-8">¡Hola! Soy {CHAT_AGENT_NAME} 👋 ¿Te ayudo con tu pedido?</p>
+          <p className="text-lg text-[#666666] text-center py-8">¡Hola! Soy {CHAT_AGENT_NAME} 👋 ¿Te ayudo con tu pedido?</p>
         )}
         {messages.map((message, index) => {
           const isUser = message.type === 'user-message';
@@ -211,7 +211,7 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
           const text = 'text' in message ? (message as { text: string }).text : '';
           return (
             <div key={`${message.id}-${index}`} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[95%] text-sm leading-relaxed ${isUser ? 'bg-[#5F7A3A] text-white rounded-2xl rounded-br-sm px-4 py-2.5' : 'bg-transparent text-[#1a1a1a] px-0 py-1'}`} style={!isUser ? { whiteSpace: 'pre-line', wordBreak: 'keep-all' } : undefined}>
+              <div className={`max-w-[95%] text-lg leading-relaxed ${isUser ? 'bg-[#5F7A3A] text-white rounded-2xl rounded-br-sm px-4 py-2.5' : 'bg-transparent text-[#1a1a1a] px-0 py-1'}`} style={!isUser ? { whiteSpace: 'pre-line', wordBreak: 'keep-all' } : undefined}>
                 {text}
               </div>
             </div>
@@ -219,7 +219,7 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
         })}
         {isTyping && (
           <div className="flex justify-start">
-            <div className="bg-transparent text-[#666666] rounded-none px-0 py-1 text-sm">
+            <div className="bg-transparent text-[#666666] rounded-none px-0 py-1 text-lg">
               <span className="inline-flex gap-1 items-center">{CHAT_AGENT_NAME} está escribiendo<span className="animate-pulse">...</span></span>
             </div>
           </div>
@@ -227,7 +227,7 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
         <div ref={messagesEndRef} />
       </div>
       <form onSubmit={handleSubmit} className="flex items-center gap-2 px-3 py-3 border-t border-[#e5e5e5] bg-white">
-        <input ref={inputRef} type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} placeholder="Escribe tu mensaje..." disabled={isLoading || !!error} className="flex-1 rounded-lg border border-[#d4d4d4] bg-[#f5f5f5] px-4 py-2.5 text-sm text-[#1a1a1a] placeholder:text-[#a3a3a3] focus:outline-none focus:ring-2 focus:ring-[#5F7A3A] focus:border-[#5F7A3A] disabled:opacity-50" aria-label="Mensaje para el asistente" />
+        <input ref={inputRef} type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} placeholder="Escribe tu mensaje..." disabled={isLoading || !!error} className="flex-1 rounded-lg border border-[#d4d4d4] bg-[#f5f5f5] px-4 py-2.5 text-lg text-[#1a1a1a] placeholder:text-[#a3a3a3] focus:outline-none focus:ring-2 focus:ring-[#5F7A3A] focus:border-[#5F7A3A] disabled:opacity-50" aria-label="Mensaje para el asistente" />
         <button type="submit" disabled={isLoading || isTyping || !!error || !inputValue.trim()} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#5F7A3A] text-white transition-colors hover:bg-[#4a602e] disabled:opacity-40 disabled:hover:bg-[#5F7A3A]" aria-label="Enviar mensaje">
           <SendHorizonal className="h-5 w-5" />
         </button>
