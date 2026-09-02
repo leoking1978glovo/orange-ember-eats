@@ -4,6 +4,7 @@ import {
   Agent,
   Client,
   Key,
+  REGION_US,
   type AnyTaskMessage,
   type Task,
 } from '@relevanceai/sdk';
@@ -13,7 +14,7 @@ import {
 // ═══════════════════════════════════════════════════════════════
 const CHAT_AGENT_ID = '3785c80b-2f7e-5958-8205-9ab0bb7ec662';
 const CHAT_AGENT_PROJECT = 'd7b62b';
-const CHAT_AGENT_REGION = 'us'; // ← Si tu agente está en otra región, cámbialo
+const CHAT_AGENT_REGION = REGION_US;
 const CHAT_AGENT_NAME = 'Santiago';
 const CHAT_STORAGE_KEY = 'punto-verde-chat-session-v2';
 // ═══════════════════════════════════════════════════════════════
