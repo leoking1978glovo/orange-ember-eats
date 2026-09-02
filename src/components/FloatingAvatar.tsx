@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from "motion/react";
 import ChatWidgetPanel from "@/components/ChatWidgetPanel";
 import { CHAT_AGENT_NAME } from "@/config/chatAgent";
 
+// Debe coincidir con el CHAT_STORAGE_KEY de ChatWidgetPanel.tsx
+const CHAT_STORAGE_KEY = "punto-verde-chat-session-v2";
+
 interface FloatingAvatarProps {
   pendingMessage?: string | null;
   onPendingMessageSent?: () => void;
@@ -15,7 +18,7 @@ export default function FloatingAvatar({
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [chatKey, setChatKey] = useState(0); // ← NUEVO: contador para forzar nueva conversación
+  const [chatKey, setChatKey] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 1000);
@@ -60,9 +63,11 @@ export default function FloatingAvatar({
   const handleMinimize = () => setIsMinimized(true);
 
   const handleClose = () => {
+    // 🔴 CAMBIO CLAVE 1: Borramos la sesión guardada en localStorage
+    localStorage.removeItem(CHAT_STORAGE_KEY);
     setIsOpen(false);
     setIsMinimized(false);
-    setChatKey((prev) => prev + 1); // ← NUEVO: incrementa la key para borrar la conversación
+    setChatKey((prev) => prev + 1);
   };
 
   return (
@@ -170,9 +175,7 @@ export default function FloatingAvatar({
                   </div>
                 </div>
 
-                {/* BOTONES: MINIMIZAR + CERRAR */}
                 <div className="flex items-center gap-1">
-                  {/* MINIMIZAR (barrita) */}
                   <button
                     onClick={handleMinimize}
                     className="rounded-full p-2 text-white transition-colors hover:bg-white/20"
@@ -194,7 +197,6 @@ export default function FloatingAvatar({
                     </svg>
                   </button>
 
-                  {/* CERRAR (X) */}
                   <button
                     onClick={handleClose}
                     className="rounded-full p-2 text-white transition-colors hover:bg-white/20"
@@ -221,8 +223,10 @@ export default function FloatingAvatar({
 
               <div className="min-h-0 flex-1">
                 <ChatWidgetPanel
+                  // 🔴 CAMBIO CLAVE 2: key={chatKey} fuerza a React a destruir y recrear
+                  // el componente desde cero, generando una conversación limpia
+                  key={chatKey}
                   className="h-full"
-                  chatKey={chatKey} // ← PASA LA KEY AL PANEL
                   pendingMessage={pendingMessage}
                   onPendingMessageSent={onPendingMessageSent}
                 />
