@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from "motion/react";
 import ChatWidgetPanel from "@/components/ChatWidgetPanel";
 import { CHAT_AGENT_NAME } from "@/config/chatAgent";
 
-// Debe coincidir con el USER_ID_KEY de ChatWidgetPanel.tsx
-const USER_ID_KEY = "punto-verde-chat-user-id";
+// Debe coincidir con el CHAT_STORAGE_KEY de ChatWidgetPanel.tsx
+const CHAT_STORAGE_KEY = "punto-verde-chat-session-v2";
 
 interface FloatingAvatarProps {
   pendingMessage?: string | null;
@@ -63,8 +63,8 @@ export default function FloatingAvatar({
   const handleMinimize = () => setIsMinimized(true);
 
   const handleClose = () => {
-    // Borra el user_id para que la próxima vez se genere uno nuevo
-    localStorage.removeItem(USER_ID_KEY);
+    // Borra la sesión del chat para que la próxima vez empiece limpio
+    localStorage.removeItem(CHAT_STORAGE_KEY);
     setIsOpen(false);
     setIsMinimized(false);
     setChatKey((prev) => prev + 1);
@@ -223,8 +223,8 @@ export default function FloatingAvatar({
 
               <div className="min-h-0 flex-1">
                 <ChatWidgetPanel
+                  key={chatKey}
                   className="h-full"
-                  chatKey={chatKey}
                   pendingMessage={pendingMessage}
                   onPendingMessageSent={onPendingMessageSent}
                 />
