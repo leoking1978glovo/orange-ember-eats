@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { ShoppingCart } from "lucide-react";
 
 const links = [
   { label: "Menú", href: "#menu" },
@@ -10,6 +11,22 @@ const links = [
 
 export function Navbar() {
   const [solid, setSolid] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  // Leer contador del carrito
+  const updateCartCount = () => {
+    const stored = localStorage.getItem("punto-verde-cart-simple");
+    if (stored) {
+      try {
+        const items = JSON.parse(stored);
+        setCartCount(items.length);
+      } catch {
+        setCartCount(0);
+      }
+    } else {
+      setCartCount(0);
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 40);
@@ -17,6 +34,24 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Actualizar contador cada vez que cambie el storage
+  useEffect(() => {
+    const handleStorage = () => updateCartCount();
+    window.addEventListener("storage", handleStorage);
+    
+    // También actualizar periódicamente
+    const interval = setInterval(updateCartCount, 500);
+    
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      clearInterval(interval);
+    };
+  }, []);
+
+  const handleOpenCart = () => {
+    window.dispatchEvent(new Event("open-cart"));
+  };
 
   return (
     <motion.header
@@ -41,18 +76,38 @@ export function Navbar() {
           className="col-start-1 justify-self-start font-display text-2xl tracking-tight text-cream md:col-start-2 md:justify-self-center md:text-3xl"
         >
           PUNTO<span className="text-[#5F7A3A]">VERDE</span>
-
         </a>
 
-        <div className="hidden justify-end gap-8 text-xs font-semibold tracking-[0.25em] text-cream uppercase md:flex">
+        <div className="hidden justify-end gap-8 text-xs font-semibold tracking-[0.25em] text-cream uppercase md:flex items-center">
           {links.slice(2).map((l) => (
             <a key={l.href} href={l.href} className="transition-colors hover:text-primary">
               {l.label}
             </a>
           ))}
+          {/* BOTÓN DEL CARRITO - DESKTOP */}
+          <button
+            onClick={handleOpenCart}
+            className="relative p-2 rounded-full hover:bg-white/10 transition-colors"
+          >
+            <ShoppingCart className="h-5 w-5 text-cream" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-[#5F7A3A] text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full">
+                {cartCount}
+              </span>
+            )}
+          </button>
         </div>
 
         <div className="col-start-3 flex justify-end md:hidden">
+          {/* BOTÓN DEL CARRITO - MÓVIL */}
+          <button onClick={handleOpenCart} className="relative p-2 mr-2">
+            <ShoppingCart className="h-5 w-5 text-cream" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-[#5F7A3A] text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full">
+                {cartCount}
+              </span>
+            )}
+          </button>
           <a
             href="#reservas"
             className="rounded-full bg-primary px-4 py-2 text-[11px] font-bold tracking-widest text-primary-foreground uppercase"

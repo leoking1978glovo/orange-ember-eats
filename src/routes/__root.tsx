@@ -1,3 +1,4 @@
+import { CartDrawer } from "@/components/CartDrawer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -130,6 +131,7 @@ function RootComponent() {
       <Outlet />
       <Toaster position="top-center" />
       <FloatingAvatar />
+      <CartDrawer />
     </QueryClientProvider>
   );
 }
