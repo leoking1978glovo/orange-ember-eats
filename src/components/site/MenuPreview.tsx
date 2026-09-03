@@ -160,30 +160,30 @@ export function MenuPreview() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
               whileHover={{ y: -6, scale: 1.02 }}
-              className="w-[88vw] shrink-0 rounded-[2rem] bg-white p-5 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-black/5 md:w-[340px] md:p-6"
+              className="flex w-[88vw] shrink-0 flex-col rounded-[2rem] bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-black/5 md:w-[340px] md:p-6"
             >
-              <h3 className="border-b-2 border-primary/30 pb-2 text-xl font-bold text-ink md:text-2xl">
+              <h3 className="border-b-2 border-primary/30 pb-3 text-2xl font-bold text-ink md:text-2xl">
                 {cat.title}
               </h3>
-              <ul className="mt-3 space-y-2 md:mt-4 md:space-y-3">
+              <ul className="mt-5 flex flex-1 flex-col justify-center space-y-4 md:mt-4 md:space-y-3">
                 {cat.items.map((item) => (
                   <li key={item.name}>
                     <div className="flex items-baseline justify-between gap-2">
-                      <span className="text-sm font-semibold text-ink md:text-base">
+                      <span className="text-base font-semibold text-ink md:text-base">
                         {item.name}
                       </span>
                       <span className="h-px flex-1 bg-border" />
                       <button
                         type="button"
                         onClick={() => handlePriceClick(item, cat.title)}
-                        className="flex shrink-0 cursor-pointer items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 font-display text-sm text-primary transition-colors hover:bg-primary hover:text-cream md:px-3 md:py-1 md:text-base"
+                        className="flex shrink-0 cursor-pointer items-center gap-1 rounded-full bg-primary/10 px-3 py-1 font-display text-base text-primary transition-colors hover:bg-primary hover:text-cream md:px-3 md:py-1 md:text-base"
                       >
-                        <ShoppingCart className="h-3 w-3 md:h-4 md:w-4" />
+                        <ShoppingCart className="h-4 w-4 md:h-4 md:w-4" />
                         {item.price}
                       </button>
                     </div>
                     {item.description && (
-                      <p className="mt-0.5 text-xs leading-snug text-muted-foreground md:text-sm">
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground md:text-sm">
                         {item.description}
                       </p>
                     )}
