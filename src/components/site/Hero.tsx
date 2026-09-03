@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import heroBg from "@/assets/hero-bg.jpg";
+import logoPuntoVerde from "@/assets/punto-verde-logo.png";
 
 const words = ["Tradicion", "y","Sabor"];
 
@@ -20,10 +21,24 @@ export function Hero() {
       <div className="absolute -top-40 left-1/2 h-[60vh] w-[60vw] -translate-x-1/2 rounded-full bg-primary/25 blur-[140px]" />
 
       <div className="relative mx-auto w-full max-w-[1600px] px-6 pb-20 md:px-12 md:pb-28">
+        {/* LOGO PUNTO VERDE */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1, duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
+          className="mb-8 flex justify-start"
+        >
+          <img
+            src={logoPuntoVerde}
+            alt="Punto Verde - Gastronomía Colombiana"
+            className="h-20 w-auto md:h-28 drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+          />
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          transition={{ delay: 0.25, duration: 0.6 }}
           className="mb-6 text-xs font-semibold tracking-[0.4em] text-secondary uppercase"
         >
           Cocina con alma ·  · Desde 2024
@@ -35,7 +50,7 @@ export function Hero() {
               key={w}
               initial={{ opacity: 0, y: "60%" }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08 * i, duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
+              transition={{ delay: 0.08 * i + 0.3, duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
               className={`mr-4 inline-block ${i === 2 ? "text-fire" : ""}`}
             >
               {w}
