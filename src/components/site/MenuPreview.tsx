@@ -160,36 +160,36 @@ export function MenuPreview() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
               whileHover={{ y: -6, scale: 1.02 }}
-              className="flex w-[88vw] shrink-0 flex-col rounded-[2rem] bg-white p-7 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-black/5 md:w-[340px] md:p-5"
+              className="flex w-[88vw] shrink-0 flex-col rounded-[2rem] bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-black/5 md:w-[340px] md:p-5 md:justify-start"
             >
-              {/* TITULO: muy grande en movil, normal en desktop */}
-              <h3 className="border-b-2 border-primary/30 pb-3 text-3xl font-bold text-ink md:pb-2 md:text-xl">
+              {/* TITULO: grande en movil, normal en desktop */}
+              <h3 className="border-b-2 border-primary/30 pb-3 text-2xl font-bold text-ink md:pb-2 md:text-xl">
                 {cat.title}
               </h3>
 
-              {/* LISTA: mucho espacio en movil, compacto en desktop */}
-              <ul className="mt-6 flex flex-1 flex-col justify-center space-y-5 md:mt-3 md:justify-start md:space-y-2">
+              {/* LISTA: espaciado amplio en movil, compacto en desktop */}
+              <ul className="mt-5 flex flex-1 flex-col justify-center space-y-4 md:mt-3 md:justify-start md:space-y-2">
                 {cat.items.map((item) => (
                   <li key={item.name}>
                     <div className="flex items-baseline justify-between gap-2">
-                      {/* NOMBRE: muy grande en movil */}
-                      <span className="text-lg font-semibold text-ink md:text-sm">
+                      {/* NOMBRE: grande en movil, normal en desktop */}
+                      <span className="text-base font-semibold text-ink md:text-sm">
                         {item.name}
                       </span>
                       <span className="h-px flex-1 bg-border" />
-                      {/* PRECIO: grande en movil */}
+                      {/* PRECIO: grande en movil, normal en desktop */}
                       <button
                         type="button"
                         onClick={() => handlePriceClick(item, cat.title)}
-                        className="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 font-display text-lg text-primary transition-colors hover:bg-primary hover:text-cream md:px-2.5 md:py-0.5 md:text-sm"
+                        className="flex shrink-0 cursor-pointer items-center gap-1 rounded-full bg-primary/10 px-3 py-1 font-display text-base text-primary transition-colors hover:bg-primary hover:text-cream md:px-2.5 md:py-0.5 md:text-sm"
                       >
-                        <ShoppingCart className="h-5 w-5 md:h-3 md:w-3" />
+                        <ShoppingCart className="h-4 w-4 md:h-3 md:w-3" />
                         {item.price}
                       </button>
                     </div>
-                    {/* DESCRIPCION: grande en movil */}
+                    {/* DESCRIPCION: visible en movil, mas pequeña en desktop */}
                     {item.description && (
-                      <p className="mt-1.5 text-base leading-relaxed text-muted-foreground md:mt-0.5 md:text-xs">
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground md:mt-0.5 md:text-xs">
                         {item.description}
                       </p>
                     )}
