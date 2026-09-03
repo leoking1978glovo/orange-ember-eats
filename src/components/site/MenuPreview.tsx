@@ -18,7 +18,7 @@ function parsePrice(priceStr: string): number {
   return parseFloat(firstValue) || 0;
 }
 
-const GAP = 16;
+const GAP = 20;
 
 export function MenuPreview() {
   const { addItem } = useCart();
@@ -44,7 +44,7 @@ export function MenuPreview() {
 
   const itemWidth = () => {
     const track = trackRef.current;
-    if (!track || track.children.length === 0) return 280;
+    if (!track || track.children.length === 0) return 300;
     return (track.children[0] as HTMLElement).offsetWidth + GAP;
   };
 
@@ -150,21 +150,22 @@ export function MenuPreview() {
           dragConstraints={{ left: -maxDrag, right: 0 }}
           dragElastic={0.08}
           onDragEnd={onDragEnd}
-          className="flex cursor-grab gap-4 active:cursor-grabbing px-4 md:gap-6 md:px-12"
+          className="flex cursor-grab gap-5 active:cursor-grabbing px-4 md:gap-6 md:px-12"
         >
           {menu.map((cat, i) => (
             <motion.div
               key={cat.title}
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-              className="w-[85vw] shrink-0 rounded-xl bg-white p-5 shadow-sm md:w-[300px] md:p-6"
+              whileHover={{ y: -6, scale: 1.02 }}
+              className="w-[88vw] shrink-0 rounded-[2rem] bg-white p-5 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-black/5 md:w-[340px] md:p-6"
             >
-              <h3 className="border-b-2 border-ink pb-2 text-xl font-bold text-ink md:text-2xl">
+              <h3 className="border-b-2 border-primary/30 pb-2 text-xl font-bold text-ink md:text-2xl">
                 {cat.title}
               </h3>
-              <ul className="mt-4 space-y-3 md:mt-5 md:space-y-4">
+              <ul className="mt-3 space-y-2 md:mt-4 md:space-y-3">
                 {cat.items.map((item) => (
                   <li key={item.name}>
                     <div className="flex items-baseline justify-between gap-2">
@@ -175,14 +176,14 @@ export function MenuPreview() {
                       <button
                         type="button"
                         onClick={() => handlePriceClick(item, cat.title)}
-                        className="flex shrink-0 cursor-pointer items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 font-display text-sm text-primary transition-colors hover:bg-primary/20 md:px-3 md:py-1 md:text-base"
+                        className="flex shrink-0 cursor-pointer items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 font-display text-sm text-primary transition-colors hover:bg-primary hover:text-cream md:px-3 md:py-1 md:text-base"
                       >
                         <ShoppingCart className="h-3 w-3 md:h-4 md:w-4" />
                         {item.price}
                       </button>
                     </div>
                     {item.description && (
-                      <p className="mt-0.5 text-xs text-muted-foreground md:text-sm">
+                      <p className="mt-0.5 text-xs leading-snug text-muted-foreground md:text-sm">
                         {item.description}
                       </p>
                     )}
