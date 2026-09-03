@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import heroBg from "@/assets/hero-bg.jpg";
 import logoPuntoVerde from "@/assets/punto-verde-logo.png";
+import banderaColombia from "@/assets/bandera-de-colombia.png";
 
 const words = ["Tradicion", "y","Sabor"];
 
@@ -21,17 +22,22 @@ export function Hero() {
       <div className="absolute -top-40 left-1/2 h-[60vh] w-[60vw] -translate-x-1/2 rounded-full bg-primary/25 blur-[140px]" />
 
       <div className="relative mx-auto w-full max-w-[1600px] px-6 pb-20 md:px-12 md:pb-28">
-        {/* LOGO PUNTO VERDE */}
+        {/* LOGOS: Punto Verde + Bandera Colombia */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1, duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
-          className="mb-8 flex justify-start"
+          className="mb-8 flex items-center gap-4"
         >
           <img
             src={logoPuntoVerde}
             alt="Punto Verde - Gastronomía Colombiana"
             className="h-20 w-auto md:h-28 drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+          />
+          <img
+            src={banderaColombia}
+            alt="Bandera de Colombia"
+            className="h-12 w-auto md:h-16 drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
           />
         </motion.div>
 
