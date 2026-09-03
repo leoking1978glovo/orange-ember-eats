@@ -52,7 +52,6 @@ export function Navbar() {
               {l.label}
             </a>
           ))}
-          {/* BOTÓN DEL CARRITO */}
           <button
             onClick={openCart}
             className="relative flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 transition-colors hover:border-primary hover:bg-primary hover:text-ink"
@@ -68,8 +67,8 @@ export function Navbar() {
           </button>
         </div>
 
-        {/* Mobile: carrito + reservar */}
-        <div className="col-start-3 flex justify-end gap-3 md:hidden">
+        {/* Mobile: solo carrito (sin botón Reservar) */}
+        <div className="col-start-3 flex justify-end md:hidden">
           <button
             onClick={openCart}
             className="relative flex h-10 w-10 items-center justify-center rounded-full border border-cream/20 text-cream transition-colors hover:border-primary hover:bg-primary hover:text-ink"
@@ -82,12 +81,6 @@ export function Navbar() {
               </span>
             )}
           </button>
-          <a
-            href="#reservas"
-            className="rounded-full bg-primary px-4 py-2 text-[11px] font-bold tracking-widest text-primary-foreground uppercase"
-          >
-            Reservar
-          </a>
         </div>
       </nav>
     </motion.header>
