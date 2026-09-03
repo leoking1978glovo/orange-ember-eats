@@ -3,12 +3,18 @@ import { motion } from "motion/react";
 import { menu } from "@/data/restaurant";
 import { ShoppingCart, X, Check } from "lucide-react";
 
+type CartItem = {
+  name: string;
+  price: string;
+};
+
 type SelectedItem = {
   name: string;
   price: string;
 } | null;
 
 export function MenuPreview() {
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedItem, setSelectedItem] = useState<SelectedItem>(null);
 
   const handlePriceClick = (item: { name: string; price: string }) => {
@@ -17,17 +23,8 @@ export function MenuPreview() {
 
   const handleConfirm = () => {
     if (!selectedItem) return;
-
-    // Guardar en localStorage (el drawer lee de aquí)
-    const stored = localStorage.getItem("punto-verde-cart-simple");
-    const current: { name: string; price: string }[] = stored ? JSON.parse(stored) : [];
-    current.push(selectedItem);
-    localStorage.setItem("punto-verde-cart-simple", JSON.stringify(current));
-
+    setCart((prev) => [...prev, selectedItem]);
     setSelectedItem(null);
-
-    // Abrir el drawer
-    window.dispatchEvent(new Event("open-cart"));
   };
 
   const handleCancel = () => {
@@ -37,6 +34,22 @@ export function MenuPreview() {
   return (
     <section id="menu" className="bg-cream py-24 md:py-40 relative">
       <div className="mx-auto max-w-[1600px] px-6 md:px-12">
+        {/* TEMPORAL: Para ver que el carrito funciona. Se quitará en el paso 2 */}
+        {cart.length > 0 && (
+          <div className="mb-8 p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+            <h4 className="font-bold text-ink mb-2">
+              🛒 Carrito temporal ({cart.length} items):
+            </h4>
+            <ul className="space-y-1">
+              {cart.map((item, i) => (
+                <li key={i} className="text-sm text-gray-600">
+                  {item.name} — {item.price}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <div className="grid gap-6 md:grid-cols-12 md:items-end">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
@@ -66,6 +79,7 @@ export function MenuPreview() {
                     <div className="flex items-baseline justify-between gap-3">
                       <span className="font-semibold text-ink">{item.name}</span>
                       <span className="h-px flex-1 bg-border" />
+                      {/* BOTÓN DEL PRECIO */}
                       <button
                         type="button"
                         onClick={() => handlePriceClick(item)}
@@ -109,4 +123,17 @@ export function MenuPreview() {
                 No
               </button>
               <button
-               
+                type="button"
+                onClick={handleConfirm}
+                className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-[#5F7A3A] py-3 text-white font-semibold hover:bg-[#4a602e] transition-colors"
+              >
+                <Check className="h-4 w-4" />
+                Sí, añadir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
