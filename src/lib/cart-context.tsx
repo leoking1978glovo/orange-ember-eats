@@ -11,8 +11,8 @@ import {
   export interface CartItem {
     id: string;
     name: string;
-    price: string;      // texto original ej: "14,50 €"
-    priceValue: number; // valor numérico para sumar
+    price: string;
+    priceValue: number;
     quantity: number;
     category?: string;
   }
@@ -35,9 +35,7 @@ import {
   const STORAGE_KEY = "punto-verde-cart";
   
   function parsePrice(priceStr: string): number {
-    const clean = priceStr
-      .replace(/[€\s]/g, "")
-      .replace(",", ".");
+    const clean = priceStr.replace(/[€\s]/g, "").replace(",", ".");
     const firstValue = clean.split("-")[0];
     return parseFloat(firstValue) || 0;
   }
@@ -68,7 +66,6 @@ import {
         }
         return [...prev, { ...item, quantity: 1 }];
       });
-      setIsOpen(true);
     }, []);
   
     const removeItem = useCallback((id: string) => {
