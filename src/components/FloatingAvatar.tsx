@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "motion/react";
 import ChatWidgetPanel from "@/components/ChatWidgetPanel";
 import { CHAT_AGENT_NAME } from "@/config/chatAgent";
 
-// Debe coincidir con el CHAT_STORAGE_KEY de ChatWidgetPanel.tsx
 const CHAT_AGENT_ID = '8054b867-8ce4-4250-8710-44feaa2cf640';
 const CHAT_STORAGE_KEY = `r-${CHAT_AGENT_ID}`;
 
@@ -13,13 +12,16 @@ interface FloatingAvatarProps {
 }
 
 export default function FloatingAvatar({
-  pendingMessage,
+  pendingMessage: externalPendingMessage,
   onPendingMessageSent,
 }: FloatingAvatarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [chatKey, setChatKey] = useState(0);
+  const [localPendingMessage, setLocalPendingMessage] = useState<string | null>(null);
+
+  const effectivePendingMessage = localPendingMessage ?? externalPendingMessage ?? null;
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 1000);
@@ -27,11 +29,11 @@ export default function FloatingAvatar({
   }, []);
 
   useEffect(() => {
-    if (pendingMessage && !isOpen) {
+    if (externalPendingMessage && !isOpen) {
       setIsOpen(true);
       setIsMinimized(false);
     }
-  }, [pendingMessage, isOpen]);
+  }, [externalPendingMessage, isOpen]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -52,6 +54,21 @@ export default function FloatingAvatar({
     return () => window.removeEventListener("open-santiago-chat", handleOpenChat);
   }, []);
 
+  // NUEVO: Escuchar pedidos del carrito
+  useEffect(() => {
+    const handlePedido = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const message = customEvent.detail?.message as string | undefined;
+      if (message) {
+        setLocalPendingMessage(message);
+        setIsOpen(true);
+        setIsMinimized(false);
+      }
+    };
+    window.addEventListener("santiago-pending-message", handlePedido);
+    return () => window.removeEventListener("santiago-pending-message", handlePedido);
+  }, []);
+
   const handleAvatarClick = () => {
     if (isOpen && isMinimized) {
       setIsMinimized(false);
@@ -67,6 +84,7 @@ export default function FloatingAvatar({
     localStorage.removeItem(CHAT_STORAGE_KEY);
     setIsOpen(false);
     setIsMinimized(false);
+    setLocalPendingMessage(null);
     setChatKey((prev) => prev + 1);
   };
 
@@ -137,7 +155,15 @@ export default function FloatingAvatar({
                 </div>
               </div>
               <div className="min-h-0 flex-1">
-                <ChatWidgetPanel key={chatKey} className="h-full" pendingMessage={pendingMessage} onPendingMessageSent={onPendingMessageSent} />
+                <ChatWidgetPanel
+                  key={chatKey}
+                  className="h-full"
+                  pendingMessage={effectivePendingMessage}
+                  onPendingMessageSent={() => {
+                    setLocalPendingMessage(null);
+                    onPendingMessageSent?.();
+                  }}
+                />
               </div>
             </motion.div>
           </div>

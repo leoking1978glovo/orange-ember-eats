@@ -13,11 +13,37 @@ export function CartDrawer() {
   const { items, isOpen, closeCart, updateQuantity, removeItem, totalPrice } =
     useCart();
 
+  const handlePedirAhora = () => {
+    if (items.length === 0) return;
+
+    const lines = items.map(
+      (item) =>
+        `- ${item.name} x${item.quantity} = ${(
+          item.priceValue * item.quantity
+        )
+          .toFixed(2)
+          .replace(".", ",")} €`
+    );
+
+    const total = totalPrice.toFixed(2).replace(".", ",");
+
+    const message = `Hola Santiago, quiero hacer este pedido:\n\n${lines.join(
+      "\n"
+    )}\n\nTotal: ${total} €\n\n¿Me confirmas?`;
+
+    closeCart();
+
+    window.dispatchEvent(
+      new CustomEvent("santiago-pending-message", {
+        detail: { message },
+      })
+    );
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[90] flex justify-end">
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -25,8 +51,6 @@ export function CartDrawer() {
             onClick={closeCart}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           />
-
-          {/* Panel */}
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -34,7 +58,6 @@ export function CartDrawer() {
             transition={{ type: "spring", damping: 28, stiffness: 280 }}
             className="relative flex h-full w-full max-w-md flex-col bg-cream shadow-2xl"
           >
-            {/* Header */}
             <div className="flex items-center justify-between border-b border-ink/10 px-6 py-5">
               <h2 className="flex items-center gap-3 font-display text-2xl tracking-tight text-ink">
                 <ShoppingCart className="h-6 w-6 text-primary" />
@@ -49,7 +72,6 @@ export function CartDrawer() {
               </button>
             </div>
 
-            {/* Items */}
             <div className="flex-1 overflow-y-auto px-6 py-4">
               {items.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center gap-4 text-ink/40">
@@ -72,14 +94,13 @@ export function CartDrawer() {
                       className="flex gap-4 rounded-xl bg-white p-4 shadow-sm"
                     >
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-ink truncate">
+                        <h3 className="truncate font-semibold text-ink">
                           {item.name}
                         </h3>
                         <p className="mt-0.5 font-display text-primary">
                           {item.price}
                         </p>
                       </div>
-
                       <div className="flex flex-col items-end gap-2">
                         <div className="flex items-center gap-2">
                           <button
@@ -116,7 +137,6 @@ export function CartDrawer() {
               )}
             </div>
 
-            {/* Footer */}
             {items.length > 0 && (
               <div className="border-t border-ink/10 bg-white px-6 py-5">
                 <div className="flex items-center justify-between">
@@ -127,11 +147,14 @@ export function CartDrawer() {
                     {totalPrice.toFixed(2).replace(".", ",")} €
                   </span>
                 </div>
-                <button className="mt-4 w-full rounded-full bg-[#5F7A3A] py-4 font-display text-base tracking-tight text-white uppercase transition-colors hover:bg-[#4a602e]">
-                  Pedir Ahora
+                <button
+                  onClick={handlePedirAhora}
+                  className="mt-4 w-full rounded-full bg-[#5F7A3A] py-4 font-display text-base tracking-tight text-white uppercase transition-colors hover:bg-[#4a602e]"
+                >
+                  Pedir ahora
                 </button>
                 <p className="mt-3 text-center text-xs text-ink/40">
-                  Los pedidos se confirman vía WhatsApp o en el local
+                  Los pedidos se confirman con Santiago
                 </p>
               </div>
             )}

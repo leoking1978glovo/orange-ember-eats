@@ -8,15 +8,11 @@ import {
   type Task,
 } from '@relevanceai/sdk';
 
-// ═══════════════════════════════════════════════════════════════
-// CONFIGURACIÓN NUEVA AGENTE
-// ═══════════════════════════════════════════════════════════════
 const CHAT_AGENT_ID = '8054b867-8ce4-4250-8710-44feaa2cf640';
 const CHAT_AGENT_PROJECT = '3785c80b-2f7e-5958-8205-9ab0bb7ec662';
 const CHAT_AGENT_REGION = 'd7b62b';
 const CHAT_AGENT_NAME = 'Santiago';
 const CHAT_STORAGE_KEY = `r-${CHAT_AGENT_ID}`;
-// ═══════════════════════════════════════════════════════════════
 
 type OptimisticUserMessage = {
   id: 'optimistic';
@@ -56,6 +52,13 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const pendingSentRef = useRef(false);
+
+  // NUEVO: Resetear flag cuando llega un nuevo mensaje pendiente
+  useEffect(() => {
+    if (pendingMessage) {
+      pendingSentRef.current = false;
+    }
+  }, [pendingMessage]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
