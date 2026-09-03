@@ -18,7 +18,7 @@ function parsePrice(priceStr: string): number {
   return parseFloat(firstValue) || 0;
 }
 
-const GAP = 24; // gap-6
+const GAP = 16;
 
 export function MenuPreview() {
   const { addItem } = useCart();
@@ -44,7 +44,7 @@ export function MenuPreview() {
 
   const itemWidth = () => {
     const track = trackRef.current;
-    if (!track || track.children.length === 0) return 320;
+    if (!track || track.children.length === 0) return 280;
     return (track.children[0] as HTMLElement).offsetWidth + GAP;
   };
 
@@ -111,15 +111,15 @@ export function MenuPreview() {
   };
 
   return (
-    <section id="menu" className="relative bg-cream py-24 md:py-40">
-      <div className="mx-auto max-w-[1600px] px-6 md:px-12">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+    <section id="menu" className="relative bg-cream py-16 md:py-24">
+      <div className="mx-auto max-w-[1600px] px-4 md:px-12">
+        <div className="flex flex-wrap items-end justify-between gap-4">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-[clamp(2.75rem,9vw,6.5rem)] text-ink"
+            className="text-[clamp(2.5rem,8vw,5rem)] text-ink"
           >
             La carta
           </motion.h2>
@@ -127,23 +127,23 @@ export function MenuPreview() {
             <button
               onClick={() => go(-1)}
               aria-label="Anterior"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors hover:border-primary hover:bg-primary hover:text-cream"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors hover:border-primary hover:bg-primary hover:text-cream"
             >
-              <ArrowLeft className="h-5 w-5" />
+              <ArrowLeft className="h-4 w-4" />
             </button>
             <button
               onClick={() => go(1)}
               aria-label="Siguiente"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors hover:border-primary hover:bg-primary hover:text-cream"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors hover:border-primary hover:bg-primary hover:text-cream"
             >
-              <ArrowRight className="h-5 w-5" />
+              <ArrowRight className="h-4 w-4" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* CARRUSEL: ocupa TODO el ancho de pantalla */}
-      <div ref={viewportRef} className="mt-14 overflow-hidden">
+      {/* CARRUSEL: ajustado al viewport del móvil */}
+      <div ref={viewportRef} className="mt-8 overflow-hidden md:mt-12">
         <motion.div
           ref={trackRef}
           drag="x"
@@ -151,37 +151,39 @@ export function MenuPreview() {
           dragConstraints={{ left: -maxDrag, right: 0 }}
           dragElastic={0.08}
           onDragEnd={onDragEnd}
-          className="flex cursor-grab gap-6 active:cursor-grabbing pl-6 md:pl-12"
+          className="flex cursor-grab gap-4 active:cursor-grabbing px-4 md:gap-6 md:px-12"
         >
           {menu.map((cat, i) => (
             <motion.div
               key={cat.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, delay: (i % 3) * 0.1 }}
-              className="w-[85vw] shrink-0 rounded-2xl bg-white p-8 shadow-sm md:w-[380px]"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
+              className="w-[85vw] shrink-0 rounded-xl bg-white p-5 shadow-sm md:w-[300px] md:p-6"
             >
-              <h3 className="border-b-4 border-ink pb-3 text-3xl text-ink">
+              <h3 className="border-b-2 border-ink pb-2 text-xl font-bold text-ink md:text-2xl">
                 {cat.title}
               </h3>
-              <ul className="mt-6 space-y-6">
+              <ul className="mt-4 space-y-3 md:mt-5 md:space-y-4">
                 {cat.items.map((item) => (
                   <li key={item.name}>
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span className="font-semibold text-ink">{item.name}</span>
+                    <div className="flex items-baseline justify-between gap-2">
+                      <span className="text-sm font-semibold text-ink md:text-base">
+                        {item.name}
+                      </span>
                       <span className="h-px flex-1 bg-border" />
                       <button
                         type="button"
                         onClick={() => handlePriceClick(item, cat.title)}
-                        className="flex cursor-pointer items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 font-display text-lg text-primary transition-colors hover:bg-primary/20 hover:text-primary/80"
+                        className="flex shrink-0 cursor-pointer items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 font-display text-sm text-primary transition-colors hover:bg-primary/20 md:px-3 md:py-1 md:text-base"
                       >
-                        <ShoppingCart className="h-4 w-4" />
+                        <ShoppingCart className="h-3 w-3 md:h-4 md:w-4" />
                         {item.price}
                       </button>
                     </div>
                     {item.description && (
-                      <p className="mt-1 text-sm text-muted-foreground">
+                      <p className="mt-0.5 text-xs text-muted-foreground md:text-sm">
                         {item.description}
                       </p>
                     )}
@@ -192,6 +194,11 @@ export function MenuPreview() {
           ))}
         </motion.div>
       </div>
+
+      {/* Indicador de swipe en móvil */}
+      <p className="mt-4 text-center text-xs text-ink/40 md:hidden">
+        ← Desliza para ver más categorías →
+      </p>
 
       {/* POPUP DE CONFIRMACION */}
       <AnimatePresence>
