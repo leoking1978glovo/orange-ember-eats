@@ -128,7 +128,7 @@ export function CartDrawer() {
                   </span>
                 </div>
                 <button className="mt-4 w-full rounded-full bg-[#5F7A3A] py-4 font-display text-base tracking-tight text-white uppercase transition-colors hover:bg-[#4a602e]">
-                  Hacer pedido
+                  Pedir Ahora
                 </button>
                 <p className="mt-3 text-center text-xs text-ink/40">
                   Los pedidos se confirman vía WhatsApp o en el local
