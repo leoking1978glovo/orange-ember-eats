@@ -111,7 +111,7 @@ export function MenuPreview() {
   };
 
   return (
-    <section id="menu" className="relative bg-cream py-16 md:py-24">
+    <section id="menu" className="relative bg-[#FFF0E6] py-16 md:py-24">
       <div className="mx-auto max-w-[1600px] px-4 md:px-12">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <motion.h2
@@ -142,7 +142,6 @@ export function MenuPreview() {
         </div>
       </div>
 
-      {/* CARRUSEL: ajustado al viewport del móvil */}
       <div ref={viewportRef} className="mt-8 overflow-hidden md:mt-12">
         <motion.div
           ref={trackRef}
@@ -195,12 +194,10 @@ export function MenuPreview() {
         </motion.div>
       </div>
 
-      {/* Indicador de swipe en móvil */}
       <p className="mt-4 text-center text-xs text-ink/40 md:hidden">
         ← Desliza para ver más categorías →
       </p>
 
-      {/* POPUP DE CONFIRMACION */}
       <AnimatePresence>
         {selectedItem && (
           <motion.div
