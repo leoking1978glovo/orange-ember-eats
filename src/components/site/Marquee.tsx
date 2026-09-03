@@ -2,7 +2,7 @@ import banderaColombia from "@/assets/bandera-de-colombia.png";
 
 const items = [
   "Producto fresco",
-  "Cocina con alma",
+  "Cocina con el alma",
   "Sabor natural",
   { type: "flag" as const },
   { type: "flag" as const },
