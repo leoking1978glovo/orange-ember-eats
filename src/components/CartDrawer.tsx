@@ -10,7 +10,7 @@ import {
 import { useCart } from "@/lib/cart-context";
 
 export function CartDrawer() {
-  const { items, isOpen, closeCart, updateQuantity, removeItem, totalPrice } =
+  const { items, isOpen, closeCart, updateQuantity, removeItem, totalPrice, clearCart } =
     useCart();
 
   const handlePedirAhora = () => {
@@ -31,6 +31,7 @@ export function CartDrawer() {
       "\n"
     )}\n\nTotal: ${total} €\n\n¿Me confirmas?`;
 
+    clearCart();
     closeCart();
 
     window.dispatchEvent(
