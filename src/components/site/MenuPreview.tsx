@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, animate, AnimatePresence } from "motion/react";
 import { menu } from "@/data/restaurant";
 import { useCart } from "@/lib/cart-context";
-import { ShoppingCart, X, Check } from "lucide-react";
+import { ShoppingCart, X, Check, ArrowLeft, ArrowRight } from "lucide-react";
 
 type SelectedItem = {
   id: string;
@@ -18,9 +18,59 @@ function parsePrice(priceStr: string): number {
   return parseFloat(firstValue) || 0;
 }
 
+const GAP = 24; // gap-6
+
 export function MenuPreview() {
   const { addItem } = useCart();
   const [selectedItem, setSelectedItem] = useState<SelectedItem>(null);
+
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const [maxDrag, setMaxDrag] = useState(0);
+
+  const measure = useCallback(() => {
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    if (!viewport || !track) return;
+    setMaxDrag(Math.max(0, track.scrollWidth - viewport.clientWidth));
+  }, []);
+
+  useEffect(() => {
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [measure]);
+
+  const itemWidth = () => {
+    const track = trackRef.current;
+    if (!track || track.children.length === 0) return 320;
+    return (track.children[0] as HTMLElement).offsetWidth + GAP;
+  };
+
+  const snapTo = useCallback(
+    (target: number) => {
+      const clamped = Math.max(-maxDrag, Math.min(0, target));
+      const step = itemWidth();
+      const snapped = Math.round(clamped / step) * step;
+      animate(x, Math.max(-maxDrag, Math.min(0, snapped)), {
+        type: "spring",
+        stiffness: 300,
+        damping: 32,
+      });
+    },
+    [maxDrag, x]
+  );
+
+  const onDragEnd = () => {
+    const velocity = x.getVelocity();
+    const projected = x.get() + velocity * 0.2;
+    snapTo(projected);
+  };
+
+  const go = (dir: 1 | -1) => {
+    snapTo(x.get() - dir * itemWidth());
+  };
 
   const handlePriceClick = (
     item: {
@@ -63,27 +113,54 @@ export function MenuPreview() {
   return (
     <section id="menu" className="relative bg-cream py-24 md:py-40">
       <div className="mx-auto max-w-[1600px] px-6 md:px-12">
-        <div className="grid gap-6 md:grid-cols-12 md:items-end">
+        <div className="flex flex-wrap items-end justify-between gap-6">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-[clamp(2.75rem,9vw,6.5rem)] text-ink md:col-span-7"
+            className="text-[clamp(2.75rem,9vw,6.5rem)] text-ink"
           >
             La carta
           </motion.h2>
+          <div className="hidden gap-3 md:flex">
+            <button
+              onClick={() => go(-1)}
+              aria-label="Anterior"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors hover:border-primary hover:bg-primary hover:text-cream"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <button
+              onClick={() => go(1)}
+              aria-label="Siguiente"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-ink transition-colors hover:border-primary hover:bg-primary hover:text-cream"
+            >
+              <ArrowRight className="h-5 w-5" />
+            </button>
+          </div>
         </div>
+      </div>
 
-        <div className="mt-16 grid gap-x-14 gap-y-16 md:grid-cols-2 xl:grid-cols-4">
+      {/* CARRUSEL: ocupa TODO el ancho de pantalla */}
+      <div ref={viewportRef} className="mt-14 overflow-hidden">
+        <motion.div
+          ref={trackRef}
+          drag="x"
+          style={{ x }}
+          dragConstraints={{ left: -maxDrag, right: 0 }}
+          dragElastic={0.08}
+          onDragEnd={onDragEnd}
+          className="flex cursor-grab gap-6 active:cursor-grabbing pl-6 md:pl-12"
+        >
           {menu.map((cat, i) => (
             <motion.div
               key={cat.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.08 }}
-              className={i % 2 === 1 ? "xl:mt-16" : ""}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, delay: (i % 3) * 0.1 }}
+              className="w-[85vw] shrink-0 rounded-2xl bg-white p-8 shadow-sm md:w-[380px]"
             >
               <h3 className="border-b-4 border-ink pb-3 text-3xl text-ink">
                 {cat.title}
@@ -113,10 +190,10 @@ export function MenuPreview() {
               </ul>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
-      {/* POPUP DE CONFIRMACIÓN CON ANIMACIÓN */}
+      {/* POPUP DE CONFIRMACION */}
       <AnimatePresence>
         {selectedItem && (
           <motion.div
