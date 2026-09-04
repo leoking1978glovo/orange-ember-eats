@@ -59,11 +59,11 @@ export function Dishes() {
 
   return (
     <section
-      className="bg-ink py-10 md:py-16"
+      className="bg-ink py-16 md:py-16"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* HEADER COMPACTO */}
+      {/* HEADER */}
       <div className="mx-auto max-w-[1600px] px-4 md:px-12">
         <div className="flex items-center justify-between gap-4">
           <motion.h2
@@ -99,9 +99,9 @@ export function Dishes() {
         </div>
       </div>
 
-      {/* SLIDESHOW: MÁS ALTO PARA VER LA IMAGEN */}
-      <div className="relative mx-auto mt-6 max-w-6xl px-4 md:mt-8 md:px-12">
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl md:aspect-[16/8]">
+      {/* SLIDESHOW: MÁS ALTO EN MÓVIL */}
+      <div className="relative mx-auto mt-8 max-w-6xl px-4 md:mt-8 md:px-12">
+        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl md:aspect-[16/8]">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={current.name}
@@ -132,8 +132,8 @@ export function Dishes() {
           </AnimatePresence>
         </div>
 
-        {/* PUNTOS MUY COMPACTOS */}
-        <div className="mt-4 flex justify-center gap-1.5">
+        {/* PUNTOS */}
+        <div className="mt-6 flex justify-center gap-1.5">
           {dishes.map((_, i) => (
             <button
               key={i}

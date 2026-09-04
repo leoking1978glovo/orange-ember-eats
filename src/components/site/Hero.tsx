@@ -4,6 +4,7 @@ import logoPuntoVerde from "@/assets/punto-verde-logo.png";
 import banderaColombia from "@/assets/bandera-de-colombia.png";
 
 const words = ["Tradicion", "y","Sabor"];
+const marqueeTexts = ["Punto Verde", "Producto fresco", "Cocina con alma", "Sabor natural"];
 
 export function Hero() {
   return (
@@ -75,7 +76,26 @@ export function Hero() {
             Un sitio honesto y adictivo en pleno casco urbano de Almeria.
           </motion.p>
 
-          <div className="flex flex-col items-center gap-4">
+          {/* CINTA VERDE: solo en móvil, donde estaba el botón */}
+          <div className="w-full overflow-hidden rounded-full bg-[#5F7A3A] py-3 md:hidden">
+            <motion.div
+              className="flex w-max gap-6 whitespace-nowrap"
+              animate={{ x: [0, -400] }}
+              transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
+            >
+              {[...marqueeTexts, ...marqueeTexts].map((text, i) => (
+                <span
+                  key={i}
+                  className="flex items-center gap-4 font-display text-lg tracking-tight text-[#F5EEDC] uppercase"
+                >
+                  {text} <span className="text-cream">✦</span>
+                </span>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* BOTÓN RESERVAR + FLECHA: solo en desktop */}
+          <div className="hidden flex-col items-center gap-4 md:flex">
             <motion.a
               href="#reservas"
               initial={{ opacity: 0, scale: 0.9 }}
