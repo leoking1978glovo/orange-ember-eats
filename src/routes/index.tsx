@@ -7,6 +7,7 @@ import { MenuPreview } from "@/components/site/MenuPreview";
 import { Story } from "@/components/site/Story";
 import { VideoSection } from "@/components/site/VideoSection";
 import { Reservation } from "@/components/site/Reservation";
+import { MapSection } from "@/components/site/MapSection";
 import { Footer } from "@/components/site/Footer";
 
 const title = "Punto Verde";
@@ -39,6 +40,7 @@ function Index() {
         <Story />
         <VideoSection />
         <Reservation />
+        <MapSection />
       </main>
       <Footer />
     </div>
