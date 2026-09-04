@@ -1,5 +1,6 @@
 import { CartProvider } from "@/lib/cart-context";
 import { CartDrawer } from "@/components/CartDrawer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -142,6 +143,7 @@ function RootComponent() {
         <Toaster position="top-center" />
         <FloatingAvatar />
         <CartDrawer />
+        <ScrollToTop />
       </QueryClientProvider>
     </CartProvider>
   );
