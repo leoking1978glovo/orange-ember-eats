@@ -4,7 +4,6 @@ import logoPuntoVerde from "@/assets/punto-verde-logo.png";
 import banderaColombia from "@/assets/bandera-de-colombia.png";
 
 const words = ["Tradicion", "y","Sabor"];
-const marqueeTexts = ["Punto Verde", "Producto fresco", "Cocina con alma", "Sabor natural"];
 
 export function Hero() {
   return (
@@ -23,7 +22,7 @@ export function Hero() {
       <div className="absolute -top-40 left-1/2 h-[60vh] w-[60vw] -translate-x-1/2 rounded-full bg-primary/25 blur-[140px]" />
 
       <div className="relative mx-auto w-full max-w-[1600px] px-6 pb-20 md:px-12 md:pb-28">
-        {/* LOGOS: Punto Verde + Bandera Colombia */}
+        {/* LOGOS */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -76,26 +75,8 @@ export function Hero() {
             Un sitio honesto y adictivo en pleno casco urbano de Almeria.
           </motion.p>
 
-          {/* CINTA VERDE: solo en móvil, donde estaba el botón */}
-          <div className="w-full overflow-hidden rounded-full bg-[#5F7A3A] py-3 md:hidden">
-            <motion.div
-              className="flex w-max gap-6 whitespace-nowrap"
-              animate={{ x: [0, -400] }}
-              transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
-            >
-              {[...marqueeTexts, ...marqueeTexts].map((text, i) => (
-                <span
-                  key={i}
-                  className="flex items-center gap-4 font-display text-lg tracking-tight text-[#F5EEDC] uppercase"
-                >
-                  {text} <span className="text-cream">✦</span>
-                </span>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* BOTÓN RESERVAR + FLECHA: solo en desktop */}
-          <div className="hidden flex-col items-center gap-4 md:flex">
+          {/* BOTÓN RESERVAR MESA: visible en TODOS (móvil + desktop) */}
+          <div className="flex flex-col items-center gap-4">
             <motion.a
               href="#reservas"
               initial={{ opacity: 0, scale: 0.9 }}
