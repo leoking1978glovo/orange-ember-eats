@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, animate, AnimatePresence } from "motion/react";
 import { menu } from "@/data/restaurant";
 import { useCart } from "@/lib/cart-context";
-import { ShoppingCart, X, Check, ArrowLeft, ArrowRight } from "lucide-react";
+import { ShoppingCart, X, Check, ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 
 type SelectedItem = {
   id: string;
@@ -59,7 +59,7 @@ export function MenuPreview() {
         damping: 32,
       });
     },
-    [maxDrag, x]
+    [maxDrag, x],
   );
 
   const onDragEnd = () => {
@@ -78,7 +78,7 @@ export function MenuPreview() {
       price: string;
       description: string;
     },
-    category: string
+    category: string,
   ) => {
     const id = `${category}-${item.name}`
       .toLowerCase()
@@ -113,7 +113,7 @@ export function MenuPreview() {
   return (
     <section id="menu" className="relative bg-[#FFF0E6] py-16 md:py-24">
       <div className="mx-auto max-w-[1600px] px-4 md:px-12">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex items-end justify-between gap-4">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -123,6 +123,36 @@ export function MenuPreview() {
           >
             La carta
           </motion.h2>
+
+          {/* FLECHA INDICADORA: al lado del titulo, solo en movil */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="flex items-center gap-1 md:hidden"
+          >
+            <span className="text-xs text-ink/50">Desliza</span>
+            <motion.div
+              animate={{ x: [0, 6, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <ChevronRight className="h-5 w-5 text-primary" />
+            </motion.div>
+            <motion.div
+              animate={{ x: [0, 6, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            >
+              <ChevronRight className="h-5 w-5 text-primary/60" />
+            </motion.div>
+            <motion.div
+              animate={{ x: [0, 6, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+            >
+              <ChevronRight className="h-5 w-5 text-primary/30" />
+            </motion.div>
+          </motion.div>
+
           <div className="hidden gap-3 md:flex">
             <button
               onClick={() => go(-1)}
@@ -142,7 +172,7 @@ export function MenuPreview() {
         </div>
       </div>
 
-      <div ref={viewportRef} className="mt-8 overflow-hidden md:mt-12">
+      <div ref={viewportRef} className="mt-6 overflow-hidden md:mt-12">
         <motion.div
           ref={trackRef}
           drag="x"
@@ -160,36 +190,30 @@ export function MenuPreview() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
               whileHover={{ y: -6, scale: 1.02 }}
-              className="flex w-[88vw] shrink-0 flex-col rounded-[2rem] bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-black/5 md:w-[340px] md:p-5 md:justify-start"
+              className="flex w-[88vw] shrink-0 flex-col rounded-[2rem] bg-white p-7 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ring-1 ring-black/5 md:w-[340px] md:p-5"
             >
-              {/* TITULO: grande en movil, normal en desktop */}
               <h3 className="border-b-2 border-primary/30 pb-3 text-2xl font-bold text-ink md:pb-2 md:text-xl">
                 {cat.title}
               </h3>
-
-              {/* LISTA: espaciado amplio en movil, compacto en desktop */}
-              <ul className="mt-5 flex flex-1 flex-col justify-center space-y-4 md:mt-3 md:justify-start md:space-y-2">
+              <ul className="mt-6 flex flex-1 flex-col justify-center space-y-5 md:mt-3 md:justify-start md:space-y-2">
                 {cat.items.map((item) => (
                   <li key={item.name}>
                     <div className="flex items-baseline justify-between gap-2">
-                      {/* NOMBRE: grande en movil, normal en desktop */}
-                      <span className="text-base font-semibold text-ink md:text-sm">
+                      <span className="text-lg font-semibold text-ink md:text-sm">
                         {item.name}
                       </span>
                       <span className="h-px flex-1 bg-border" />
-                      {/* PRECIO: grande en movil, normal en desktop */}
                       <button
                         type="button"
                         onClick={() => handlePriceClick(item, cat.title)}
-                        className="flex shrink-0 cursor-pointer items-center gap-1 rounded-full bg-primary/10 px-3 py-1 font-display text-base text-primary transition-colors hover:bg-primary hover:text-cream md:px-2.5 md:py-0.5 md:text-sm"
+                        className="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 font-display text-lg text-primary transition-colors hover:bg-primary hover:text-cream md:px-2.5 md:py-0.5 md:text-sm"
                       >
-                        <ShoppingCart className="h-4 w-4 md:h-3 md:w-3" />
+                        <ShoppingCart className="h-5 w-5 md:h-3 md:w-3" />
                         {item.price}
                       </button>
                     </div>
-                    {/* DESCRIPCION: visible en movil, mas pequeña en desktop */}
                     {item.description && (
-                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground md:mt-0.5 md:text-xs">
+                      <p className="mt-1.5 text-base leading-relaxed text-muted-foreground md:mt-0.5 md:text-xs">
                         {item.description}
                       </p>
                     )}
