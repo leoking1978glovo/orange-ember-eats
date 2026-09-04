@@ -39,7 +39,7 @@ export const dishes: Dish[] = [
     image: tamalcolombiano,
   },
   {
-    name: "Bndeja Paisa",
+    name: "Bandeja Paisa",
     description: "PLato colombiano que lleva, arroz blanco, carne moida, chicharron, chorizo, huevo frito, platano maduro, aguacate, arepa.",
     price: "7,90 €",
     image: bandejapaisa,
