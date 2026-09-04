@@ -124,33 +124,35 @@ export function MenuPreview() {
             La carta
           </motion.h2>
 
-          {/* FLECHA INDICADORA: al lado del titulo, solo en movil */}
+          {/* FLECHA INDICADORA: al lado del titulo, solo en movil, GRANDE */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="flex items-center gap-1 md:hidden"
+            className="flex items-center gap-2 md:hidden"
           >
-            <span className="text-xs text-ink/50">Desliza</span>
-            <motion.div
-              animate={{ x: [0, 6, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <ChevronRight className="h-5 w-5 text-primary" />
-            </motion.div>
-            <motion.div
-              animate={{ x: [0, 6, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-            >
-              <ChevronRight className="h-5 w-5 text-primary/60" />
-            </motion.div>
-            <motion.div
-              animate={{ x: [0, 6, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-            >
-              <ChevronRight className="h-5 w-5 text-primary/30" />
-            </motion.div>
+            <span className="text-base font-semibold text-primary">Desliza</span>
+            <div className="flex">
+              <motion.div
+                animate={{ x: [0, 8, 0] }}
+                transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <ChevronRight className="h-7 w-7 text-primary" />
+              </motion.div>
+              <motion.div
+                animate={{ x: [0, 8, 0] }}
+                transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut", delay: 0.15 }}
+              >
+                <ChevronRight className="h-7 w-7 text-primary/70" />
+              </motion.div>
+              <motion.div
+                animate={{ x: [0, 8, 0] }}
+                transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+              >
+                <ChevronRight className="h-7 w-7 text-primary/40" />
+              </motion.div>
+            </div>
           </motion.div>
 
           <div className="hidden gap-3 md:flex">
@@ -172,7 +174,7 @@ export function MenuPreview() {
         </div>
       </div>
 
-      <div ref={viewportRef} className="mt-6 overflow-hidden md:mt-12">
+      <div ref={viewportRef} className="mt-8 overflow-hidden md:mt-12">
         <motion.div
           ref={trackRef}
           drag="x"
