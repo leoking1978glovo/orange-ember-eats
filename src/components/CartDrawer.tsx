@@ -8,13 +8,23 @@ import {
   ChefHat,
 } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
+import { getOrderStatus } from "@/lib/order-status";
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, updateQuantity, removeItem, totalPrice, clearCart } =
     useCart();
 
-  const handlePedirAhora = () => {
+  const handlePedirAhora = async () => {
     if (items.length === 0) return;
+
+    const status = await getOrderStatus();
+
+    if (!status.open) {
+      alert(
+        "La cocina está a tope en este momento. Volveremos a recibir pedidos pronto. ¡Gracias por tu paciencia!"
+      );
+      return;
+    }
 
     const lines = items.map(
       (item) =>
@@ -95,7 +105,7 @@ export function CartDrawer() {
                       className="flex gap-4 rounded-xl bg-white p-4 shadow-sm"
                     >
                       <div className="flex-1 min-w-0">
-                        <h3 className="truncate font-semibold text-ink">
+                        <h3 className="font-semibold text-ink truncate">
                           {item.name}
                         </h3>
                         <p className="mt-0.5 font-display text-primary">
