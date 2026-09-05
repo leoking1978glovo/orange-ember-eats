@@ -35,6 +35,28 @@ interface ChatWidgetPanelProps {
   onPendingMessageSent?: () => void;
 }
 
+// 🆕 FUNCION: Formatea la fecha/hora actual en español con zona horaria Europe/Madrid
+function getCurrentDateTimeES(): string {
+  const now = new Date();
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: 'Europe/Madrid',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  };
+  return now.toLocaleString('es-ES', options);
+}
+
+// 🆕 FUNCION: Prefija la fecha/hora al mensaje del usuario
+function prefixMessageWithDateTime(text: string): string {
+  const fecha = getCurrentDateTimeES();
+  return `[Fecha y hora actual: ${fecha}]\n\n${text}`;
+}
+
 const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
   className = '',
   chatKey,
@@ -89,10 +111,14 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
   const sendMessageToAgent = useCallback(
     async (text: string) => {
       if (!agentRef.current || !text.trim() || isTyping) return;
+
+      // 🆕 Agregar fecha/hora actual al mensaje antes de enviar
+      const messageWithDate = prefixMessageWithDateTime(text);
+
       const optimisticMessage = {
         id: 'optimistic' as const,
         type: 'user-message' as const,
-        text,
+        text: messageWithDate, // 🆕 Mostramos el mensaje con fecha en el chat
         createdAt: new Date(),
         isAgent: () => false,
         isUser: () => true,
@@ -106,8 +132,8 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
         const agent = agentRef.current;
         const currentTask = taskRef.current;
         const task = currentTask
-          ? await agent.sendMessage(text, currentTask)
-          : await agent.sendMessage(text);
+          ? await agent.sendMessage(messageWithDate, currentTask) // 🆕 Enviamos el mensaje con fecha
+          : await agent.sendMessage(messageWithDate); // 🆕 Enviamos el mensaje con fecha
         if (taskRef.current !== task) {
           taskRef.current?.unsubscribe();
           taskRef.current = task;
@@ -123,16 +149,11 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
     [isTyping, attachTaskListener],
   );
 
-  // FIX: Restaurar setTimeout para dar tiempo a que el chat se inicialice
-  // antes de enviar el mensaje pendiente desde el carrito
   useEffect(() => {
     if (pendingMessage && !isLoading && !error && agentRef.current && !pendingSentRef.current) {
       pendingSentRef.current = true;
-      const timer = setTimeout(() => {
-        sendMessageToAgent(pendingMessage);
-        onPendingMessageSent?.();
-      }, 800);
-      return () => clearTimeout(timer);
+      sendMessageToAgent(pendingMessage);
+      onPendingMessageSent?.();
     }
   }, [pendingMessage, isLoading, error, sendMessageToAgent, onPendingMessageSent]);
 
