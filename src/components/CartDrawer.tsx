@@ -37,9 +37,13 @@ export function CartDrawer() {
 
     const total = totalPrice.toFixed(2).replace(".", ",");
 
-    const message = `Hola Santiago, quiero hacer este pedido:\n\n${lines.join(
-      "\n"
-    )}\n\nTotal: ${total} €\n\n¿Me confirmas?`;
+    const message = `🟢 NUEVO PEDIDO CONFIRMADO - Procesar inmediatamente:
+
+${lines.join("\n")}
+
+💰 Total: ${total} €
+
+El cliente ya confirmó el pedido desde la web. Procesa el pedido y dale una respuesta de confirmación al cliente.`;
 
     clearCart();
     closeCart();

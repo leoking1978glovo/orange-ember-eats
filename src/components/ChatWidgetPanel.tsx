@@ -126,11 +126,8 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
   useEffect(() => {
     if (pendingMessage && !isLoading && !error && agentRef.current && !pendingSentRef.current) {
       pendingSentRef.current = true;
-      const timer = setTimeout(() => {
-        sendMessageToAgent(pendingMessage);
-        onPendingMessageSent?.();
-      }, 800);
-      return () => clearTimeout(timer);
+      sendMessageToAgent(pendingMessage);
+      onPendingMessageSent?.();
     }
   }, [pendingMessage, isLoading, error, sendMessageToAgent, onPendingMessageSent]);
 
