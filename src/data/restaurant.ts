@@ -88,7 +88,7 @@ export const menu: MenuCategory[] = [
       { name: "Bandeja paisa", description: "", price: "14.50\u00A0€" },
       { name: "Sobre barriga en salsa", description: "", price: "13.50\u00A0€" },
       { name: "Lengua en salsa", description: "", price: "13.50\u00A0€" },
-      { name: "Pescado frito", description: "De acuerdo a tamaño.", price: "14.00 - 18.00\u00A0€" },
+      { name: "Pescado frito", description: "De acuerdo al tamaño desde 14.00€ a 18.00€", price: "18.00\u00A0€" },
       { name: "Chuleta valluna", description: "", price: "13.50\u00A0€" },
       { name: "Ternera a la plancha o en bistec", description: "", price: "13.50\u00A0€" },
       { name: "Mondongo", description: "Viernes y sábados. Sopa de callo, trocios de corto y costilla, patata, yuca, zanahoria cocida.", price: "14.00\u00A0€" },
