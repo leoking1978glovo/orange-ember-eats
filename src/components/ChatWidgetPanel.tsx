@@ -53,7 +53,7 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const pendingSentRef = useRef(false);
 
-  // NUEVO: Resetear flag cuando llega un nuevo mensaje pendiente
+  // Resetear flag cuando llega un nuevo mensaje pendiente
   useEffect(() => {
     if (pendingMessage) {
       pendingSentRef.current = false;
@@ -123,11 +123,16 @@ const ChatWidgetPanel: React.FC<ChatWidgetPanelProps> = ({
     [isTyping, attachTaskListener],
   );
 
+  // FIX: Restaurar setTimeout para dar tiempo a que el chat se inicialice
+  // antes de enviar el mensaje pendiente desde el carrito
   useEffect(() => {
     if (pendingMessage && !isLoading && !error && agentRef.current && !pendingSentRef.current) {
       pendingSentRef.current = true;
-      sendMessageToAgent(pendingMessage);
-      onPendingMessageSent?.();
+      const timer = setTimeout(() => {
+        sendMessageToAgent(pendingMessage);
+        onPendingMessageSent?.();
+      }, 800);
+      return () => clearTimeout(timer);
     }
   }, [pendingMessage, isLoading, error, sendMessageToAgent, onPendingMessageSent]);
 

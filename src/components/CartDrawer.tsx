@@ -37,13 +37,13 @@ export function CartDrawer() {
 
     const total = totalPrice.toFixed(2).replace(".", ",");
 
-    const message = `🟢 NUEVO PEDIDO CONFIRMADO - Procesar inmediatamente:
+    const message = `Hola Santiago, acabo de confirmar mi pedido desde la web:
 
 ${lines.join("\n")}
 
 💰 Total: ${total} €
 
-El cliente ya confirmó el pedido desde la web. Procesa el pedido y dale una respuesta de confirmación al cliente.`;
+¿Podrías procesarlo y confirmarme cuando esté listo?`;
 
     clearCart();
     closeCart();
